@@ -1,0 +1,203 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: white;
+  background-color: #1d1d1d;
+  font-family: Arimo, Arial, Helvetica, lucida grande, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* NAVBAR STYLING STARTS ===================================== */
+header.navbar {
+  background-color: #171717;
+  height: 60px;
+}
+
+header .nav-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+header .nav-container .left-nav {
+  display: flex;
+}
+
+header .nav-container .left-nav .nav-form {
+  margin: 10px 0;
+}
+
+header .nav-container .left-nav .nav-search {
+  height: 40px;
+  width: 250px;
+  background-color: transparent;
+  border-radius: 10px;
+  border: 2px solid #333;
+}
+
+header .nav-container .left-nav .nav-search::placeholder {
+  color: grey;
+  padding-left: 10px;
+}
+
+header .nav-container .left-nav ul {
+  list-style: none;
+  margin: 20px 40px;
+  padding-left: 0;
+}
+
+header .nav-container .left-nav ul li {
+  padding-right: 10px;
+}
+
+header .nav-container .left-nav ul li a {
+  color: grey;
+}
+/* NAVBAR SYLING ENDS ================================= */
+
+
+/* --------------------------------------------------------------------------------------------------- */
+
+
+/* HOMEPAGE BODY STYLING STARTS ========================= */
+/* WELCOME HEAD MESSAGE STARTS =========================*/
+.head.welcome-info {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.head h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.head .download-info {
+  font-size: 14px;
+  color: #ccc;
+  margin: 0 auto;
+  line-height: 21px;
+}
+
+.head .download-info a {
+  font-weight: 700;
+}
+
+.head a {
+  color: #428bca;
+}
+
+.head a:hover {
+  color: #428bcab7;
+}
+
+.head .links {
+  margin-top: 10px;
+}
+/* WELCOME HEAD MESSAGE ENDS ==========================*/
+
+
+/* -------------------------------------------------------------------------------------------------- */
+
+
+/* MOVIE LISTING STARTS ==============================*/
+.movie-listing .movie-row {
+  display: flex;
+  justify-content: center;
+}
+
+.movie-listing figure {
+  width: 220px;
+  padding-bottom: 0;
+}
+
+.movie-listing img {
+  margin: 0 auto;
+  width: 220px;
+  height: 315px;
+  border: 5px #fff solid;
+  border-radius: 5px;
+}
+
+.movie-listing img:hover {
+  border: 5px #6ac045 solid;
+}
+
+.movie-listing figcaption a {
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  line-height: 2;
+}
+
+.movie-listing figcaption a:hover {
+  color: grey;
+}
+
+.movie-listing figcaption .movie-year {
+  font-size: small;
+  color: grey;
+  line-height: 0.5;
+}
+/* MOVIE LISTING ENDS =================================*/
+
+
+/* -------------------------------------------------------------------------------------------------- */
+
+
+/* MOVIE DETAILS STARTS ===============================*/
+.details-section {
+  margin: 20px 20px;
+}
+
+.details-section .movie-row, .trailer-section .movie-row {
+  display: flex;
+}
+
+.details-section .similar-movies {
+  margin-left: 480px;
+  text-align: center;
+}
+
+.details-section .similar-movies h1 {
+  margin-bottom: 10px;
+}
+
+.details-section .similar-movies-box {
+  width: 220px;
+  height: 300px;
+  /* border: 1px solid white; */
+}
+
+.details-section .similar-movies-box div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 10px 15px;
+
+}
+
+.details-section .similar-movies-box img {
+  width: 100%;
+  max-width: 250px;
+  height: 130px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* MOVIE DETAILS ENDS =================================*/
+
+/* HOMEPAGE BODY STYLING ENDS ========================= */
+
+
+/* -------------------------------------------------------------------------------------------------- */
+
+
+/* FOOTER STARTS =========================== */
+
+/* FOOTER ENDS =========================== */
