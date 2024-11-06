@@ -58,6 +58,7 @@ header .nav-container .left-nav ul li {
 header .nav-container .left-nav ul li a {
   color: grey;
 }
+
 /* NAVBAR SYLING ENDS ================================= */
 
 
@@ -99,6 +100,7 @@ header .nav-container .left-nav ul li a {
 .head .links {
   margin-top: 10px;
 }
+
 /* WELCOME HEAD MESSAGE ENDS ==========================*/
 
 
@@ -106,9 +108,31 @@ header .nav-container .left-nav ul li a {
 
 
 /* MOVIE LISTING STARTS ==============================*/
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 350px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .movie-listing .movie-row {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1400px;
 }
 
 .movie-listing figure {
@@ -144,6 +168,7 @@ header .nav-container .left-nav ul li a {
   color: grey;
   line-height: 0.5;
 }
+
 /* MOVIE LISTING ENDS =================================*/
 
 
@@ -155,7 +180,10 @@ header .nav-container .left-nav ul li a {
   margin: 20px 20px;
 }
 
-.details-section .movie-row, .trailer-section .movie-row {
+.details-section .movie-row,
+.trailer-section .trailer-row,
+.summary-section .movie-summary,
+.comments-section .movie-reviews {
   display: flex;
 }
 
@@ -190,10 +218,86 @@ header .nav-container .left-nav ul li a {
   margin-bottom: 10px;
 }
 
+
+.trailer-section {
+  margin: 20px 20px;
+}
+
+
+.summary-section {
+  margin: 20px 20px;
+  width: 100%;
+}
+
+.summary-section .movie-summary .plot-summary {
+  width: 55%;
+  margin-right: 5%;
+  padding: 20px;
+
+}
+
+.summary-section .movie-summary .movie-artists {
+  width: 35%;
+  padding: 20px;
+}
+
+.summary-section .movie-summary .movie-artists .director .content,
+.summary-section .movie-summary .movie-artists .top-cast .content {
+  display: flex;
+}
+
+.summary-section .movie-summary .movie-artists img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+
+.comments-section {
+  margin: 20px 20px;
+  width: 100%;
+}
+
 /* MOVIE DETAILS ENDS =================================*/
 
 /* HOMEPAGE BODY STYLING ENDS ========================= */
 
+
+
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 
 /* -------------------------------------------------------------------------------------------------- */
 
