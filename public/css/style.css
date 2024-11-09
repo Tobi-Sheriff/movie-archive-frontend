@@ -9,6 +9,17 @@ body {
   font-family: Arimo, Arial, Helvetica, lucida grande, sans-serif;
 }
 
+/* p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h5 {
+    margin: 0;
+    padding: 0;
+} */
+
 a {
   text-decoration: none;
 }
@@ -16,23 +27,26 @@ a {
 /* NAVBAR STYLING STARTS ===================================== */
 header.navbar {
   background-color: #171717;
-  height: 60px;
+  height: 70px;
 }
 
 header .nav-container {
   display: flex;
   justify-content: space-between;
+  margin: 0 50px;
 }
 
-header .nav-container .left-nav {
+header .nav-container .logo {
+  height: 40px;
+  padding: 15px 0;
+}
+
+header .nav-container .right-nav {
   display: flex;
+  padding: 15px 0;
 }
 
-header .nav-container .left-nav .nav-form {
-  margin: 10px 0;
-}
-
-header .nav-container .left-nav .nav-search {
+header .nav-container .right-nav .nav-search {
   height: 40px;
   width: 250px;
   background-color: transparent;
@@ -40,23 +54,9 @@ header .nav-container .left-nav .nav-search {
   border: 2px solid #333;
 }
 
-header .nav-container .left-nav .nav-search::placeholder {
+header .nav-container .right-nav .nav-search::placeholder {
   color: grey;
   padding-left: 10px;
-}
-
-header .nav-container .left-nav ul {
-  list-style: none;
-  margin: 20px 40px;
-  padding-left: 0;
-}
-
-header .nav-container .left-nav ul li {
-  padding-right: 10px;
-}
-
-header .nav-container .left-nav ul li a {
-  color: grey;
 }
 
 /* NAVBAR SYLING ENDS ================================= */
@@ -69,11 +69,11 @@ header .nav-container .left-nav ul li a {
 /* WELCOME HEAD MESSAGE STARTS =========================*/
 .head.welcome-info {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 .head h1 {
-  font-size: 40px;
+  font-size: 45px;
   font-weight: 700;
   margin-bottom: 20px;
 }
@@ -82,7 +82,7 @@ header .nav-container .left-nav ul li a {
   font-size: 14px;
   color: #ccc;
   margin: 0 auto;
-  line-height: 21px;
+  line-height: 22px;
 }
 
 .head .download-info a {
@@ -108,40 +108,23 @@ header .nav-container .left-nav ul li a {
 
 
 /* MOVIE LISTING STARTS ==============================*/
-.gallery {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px 10px;
-}
-
-.gallery img {
-  width: 100%;
-  max-width: 350px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
+.container {
+  margin: 0 10%;
+  width: 80%;
 }
 
 .movie-listing .movie-row {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  max-width: 1400px;
+  justify-content: center;
 }
 
 .movie-listing figure {
-  width: 220px;
   padding-bottom: 0;
+  margin: 10px 20px;
 }
 
 .movie-listing img {
-  margin: 0 auto;
   width: 220px;
   height: 315px;
   border: 5px #fff solid;
@@ -176,19 +159,30 @@ header .nav-container .left-nav ul li a {
 
 
 /* MOVIE DETAILS STARTS ===============================*/
-.details-section {
-  margin: 20px 20px;
-}
-
-.details-section .movie-row,
+.details-section .movie-info,
 .trailer-section .trailer-row,
 .summary-section .movie-summary,
 .comments-section .movie-reviews {
   display: flex;
+  justify-content: space-between;
 }
 
-.details-section .similar-movies {
-  margin-left: 480px;
+.details-section .movie-info img {
+  width: 220px;
+  height: 315px;
+  border: 5px #fff solid;
+  border-radius: 5px;
+}
+
+.details-section .movie-info figure {
+  margin-left: 0;
+}
+
+.details-section .movie-info img:hover {
+  border: 5px #6ac045 solid;
+}
+
+.details-section .movie-info .similar-movies {
   text-align: center;
 }
 
@@ -219,26 +213,22 @@ header .nav-container .left-nav ul li a {
 }
 
 
-.trailer-section {
-  margin: 20px 20px;
-}
-
-
-.summary-section {
-  margin: 20px 20px;
+.trailer-section .trailer-row video,
+.trailer-section .trailer-row img {
   width: 100%;
+  height: 100%;
 }
 
 .summary-section .movie-summary .plot-summary {
-  width: 55%;
-  margin-right: 5%;
-  padding: 20px;
+  width: 60%;
+}
 
+.summary-section .movie-summary p {
+  opacity: 0.5;
 }
 
 .summary-section .movie-summary .movie-artists {
-  width: 35%;
-  padding: 20px;
+  width: 30%;
 }
 
 .summary-section .movie-summary .movie-artists .director .content,
@@ -253,11 +243,64 @@ header .nav-container .left-nav ul li a {
   margin-right: 10px;
 }
 
-
-.comments-section {
-  margin: 20px 20px;
-  width: 100%;
+.comments-section .users-comments {
+  width: 45%;
 }
+
+.comments-section .imdb-reviews {
+  width: 50%;
+}
+
+.comments-section .users-comments .scrollable-comments {
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  background-color: #171717;
+}
+
+.comments-section .users-comments .scrollable-comments .comment-content {
+  display: flex;
+}
+
+.comments-section .users-comments .scrollable-comments .comment-content .user-name {
+  margin-top: 0;
+  opacity: 0.5;
+}
+
+.comments-section .users-comments .scrollable-comments .comment-content img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.comments-section .imdb-reviews .reviewd-by {
+  display: flex;
+}
+
+.comments-section .imdb-reviews .reviewd-by .pre-span {
+  opacity: 0.3;
+}
+
+.comments-section .imdb-reviews .reviewd-by p {
+  margin: 0 10px;
+}
+
+.comments-section .imdb-reviews p {
+  opacity: 0.5;
+}
+
+.comments-section .imdb-reviews .read-more {
+  opacity: 0.5;
+  ;
+}
+
+.comments-section .imdb-reviews hr {
+  margin: 30px 0;
+  opacity: 0.5;
+}
+
 
 /* MOVIE DETAILS ENDS =================================*/
 
@@ -303,5 +346,138 @@ form.example::after {
 
 
 /* FOOTER STARTS =========================== */
+.footer {
+  background-color: #171717;
+  height: 100px;
+  opacity: 0.5;
+  padding-top: 30px;
+  margin-top: 50px;
+}
+
+.footer .container p {
+  text-align: center;
+}
 
 /* FOOTER ENDS =========================== */
+
+
+
+
+/* MEDIA QUERIES BEGINS */
+@media (max-width: 767px) {
+  header .nav-container .left-nav {
+    display: none;
+  }
+
+  .hamburger {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .hamburger .bar {
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger .bar:nth-child(1) {
+    top: 25%;
+  }
+
+  .hamburger .bar:nth-child(3) {
+    top: 75%;
+  }
+
+  /* Hamburger to X animation */
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(-50%) rotate(45deg);
+    top: 50%;
+  }
+
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-50%) rotate(-45deg);
+    top: 50%;
+  }
+
+  .details-section .movie-info,
+  .trailer-section .trailer-row,
+  .summary-section .movie-summary,
+  .comments-section .movie-reviews {
+    flex-wrap: wrap;
+  }
+
+  .trailer-section .trailer-row .movie-trailer,
+  .trailer-section .trailer-row .movie-image {
+    width: 100%;
+  }
+
+  .trailer-section .trailer-row video,
+  .trailer-section .trailer-row img {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+  }
+
+  .summary-section .movie-summary .plot-summary {
+    width: 100%;
+  }
+
+  .summary-section .movie-summary .movie-artists {
+    width: 100%;
+  }
+
+  .comments-section .users-comments {
+    width: 100%;
+  }
+
+  .comments-section .imdb-reviews {
+    width: 100%;
+  }
+}
+
+/* MINI */
+@media (min-width: 768px) and (max-width: 900px) {
+
+  .details-section .movie-info,
+  .trailer-section .trailer-row,
+  .summary-section .movie-summary,
+  .comments-section .movie-reviews {
+    flex-wrap: wrap;
+  }
+
+  .trailer-section .trailer-row,
+  .trailer-section .trailer-row {
+    justify-content: center;
+    margin: 50px 0;
+  }
+
+  .trailer-section .trailer-row .movie-trailer,
+  .trailer-section .trailer-row .movie-image {
+    width: 80%;
+  }
+
+  .trailer-section .trailer-row video,
+  .trailer-section .trailer-row img {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+  }
+}
+
+/* MEDIUM */
+@media (min-width: 1200px) {
+  /* .movie-listing .movie-row {
+  } */
+}
+
+/* MEDIA QUERIES ENDS */
