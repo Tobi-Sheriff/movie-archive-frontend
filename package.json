@@ -1,5 +1,5 @@
 {
-  "name": "movie-archive",
+  "name": "movie-archive-frontend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
