@@ -140,6 +140,9 @@ header .nav-container .right-nav .nav-search::placeholder {
   font-size: 15px;
   color: #fff;
   line-height: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .movie-listing figcaption a:hover {
