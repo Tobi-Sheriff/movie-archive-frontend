@@ -40,7 +40,13 @@ function createSimilarMovies() {
 
 	movies.slice(0, 4).forEach(movie => {
 		const imageAnchor = createElement('a', { href: 'details' });
-		const movieImage = createElement('img', { src: movie.image, alt: `${movie.title} download` });
+		const movieImage = createElement(
+			'img',
+			{
+				src: `https://image.tmdb.org/t/p/w200//${movie.poster}`,
+				alt: `${movie.title} download`
+			}
+		);
 		imageAnchor.appendChild(movieImage);
 		imagesContainer.appendChild(imageAnchor);
 	});
