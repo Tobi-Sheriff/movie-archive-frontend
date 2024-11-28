@@ -1,50 +1,41 @@
-import { movies } from '../seeds/movieSeed.js';
+import { createNav, createElement, createMovie, fetch_function } from '../utils/pageCreation.js';
 
-function truncate(words, maxLength) {
-  return words.length > maxLength ? `${words.slice(0, maxLength)}…` : words;
-}
-
-function createElement(tag, attributes = {}, text = '') {
-  const element = document.createElement(tag);
-  Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
-  if (text) element.textContent = text;
-  return element;
-}
-
-function createMovie(row, movie) {
-  const column = createElement('div', { class: 'columns' });
-  const figure = createElement('figure');
-  const imageAnchor = createElement('a', { href: 'details' });
-  const movieImage = createElement('img', { src: movie.image, alt: `${movie.title} download` });
-  const figcaption = createElement('figcaption');
-  const titleAnchor = createElement('a', { href: 'details' }, truncate(movie.title, 25));
-  const movieYear = createElement('p', { class: 'movie-year' }, movie.year);
-
-  imageAnchor.appendChild(movieImage);
-  figure.append(imageAnchor, figcaption);
-  figcaption.append(titleAnchor, movieYear);
-  column.appendChild(figure);
-  row.appendChild(column);
-
-  return row;
-}
-
-function initializeIndexPage() {
+async function initializeIndexPage() {
+  createNav();
+  
   const searchContainer = document.querySelector('.big-search');
-  const bigSearchForm = createElement('form', { action: 'GET' });
-  bigSearchForm.append(
-    createElement('input', { class: 'search-input', type: 'text', placeholder: 'Search..', name: 'search' }),
-    createElement('button', { type: 'submit' }, 'Search')
-  );
+  const bigSearchForm = createElement('form', { action: '/search' });
+  const bigSearchInput = createElement('input', { class: 'search-input', type: 'text', placeholder: 'Search..', name: 'search' });
+  const bigSearchBtn = createElement('button', { type: 'submit' }, 'Search');
+
+  bigSearchForm.append(bigSearchInput, bigSearchBtn);
   searchContainer.append(bigSearchForm);
+
+  bigSearchForm.addEventListener('submit', () => {
+    localStorage.setItem('setQuery', bigSearchInput.value);
+  })
 
   const movieListing = document.querySelector('.movie-listing.container');
   const row = document.querySelector('.movie-row');
 
+  let searchValue;
+  if (localStorage.getItem('searchQuery') != null) {
+    searchValue = localStorage.getItem('searchQuery');
+    localStorage.clear();
+  } else if (localStorage.getItem('setQuery') != null) {
+    searchValue = localStorage.getItem('setQuery');
+    localStorage.clear();
+  }
+
+  const MY_API_URL = `http://localhost:8000/v1/movies/search?q=${searchValue}&page=1&limit=10`;
+
+  const data = await fetch_function(MY_API_URL);
+  let movies = [];
+  movies.push(...data.response);
+
   movies.forEach(movie => createMovie(row, movie));
+
   movieListing.append(row);
 }
 
-window.addEventListener('load', () => {
-  initializeIndexPage();
-});
+window.addEventListener('load', initializeIndexPage);

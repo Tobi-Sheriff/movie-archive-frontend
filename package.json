@@ -2,7 +2,7 @@
   "name": "movie-archive-frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "App.js",
   "scripts": {
     "starts": "node index.js",
     "test": "jest test/"
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1"
   }

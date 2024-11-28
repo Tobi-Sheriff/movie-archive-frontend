@@ -52,6 +52,7 @@ header .nav-container .right-nav .nav-search {
   background-color: transparent;
   border-radius: 20px;
   border: 2px solid #333;
+  color: white;
 }
 
 header .nav-container .right-nav .nav-search::placeholder {
@@ -108,6 +109,20 @@ header .nav-container .right-nav .nav-search::placeholder {
 
 
 /* MOVIE LISTING STARTS ==============================*/
+.top-control-btn {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+
+.top-control-btn .prev-btn,
+.top-control-btn .next-btn {
+  width: 80px;
+  height: 40px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
 .container {
   margin: 0 10%;
   width: 80%;
@@ -188,6 +203,23 @@ header .nav-container .right-nav .nav-search::placeholder {
   width: 40%;
 }
 
+.details-section .movie-info .movie-details h1 {
+  margin-bottom: 25px;
+  font-size: 35px;
+}
+
+.details-section .movie-info .movie-details .year,
+.details-section .movie-info .movie-details .genre {
+  margin: 5px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.details-section .movie-info .movie-details h1,
+.details-section .movie-info .similar-movies h1 {
+  margin-top: 0;
+}
+
 .details-section .movie-info figure {
   margin-left: 0;
 }
@@ -196,8 +228,9 @@ header .nav-container .right-nav .nav-search::placeholder {
   border: 5px #6ac045 solid;
 }
 
-.details-section .similar-movies h1 {
+.details-section .movie-info .similar-movies h1 {
   margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .details-section .similar-movies-box {
@@ -219,7 +252,7 @@ header .nav-container .right-nav .nav-search::placeholder {
 }
 
 
-.trailer-section .trailer-row video,
+.trailer-section .trailer-row iframe,
 .trailer-section .trailer-row img {
   width: 100%;
   height: 100%;
@@ -358,7 +391,58 @@ header .nav-container .right-nav .nav-search::placeholder {
   box-shadow: 1px 1px 3px green;
 }
 
-/* -------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------ */
+
+
+
+
+/* COMMENT STARTS =========================== */
+.users-comments .scrollable-comments .load-comment {
+  margin: 0 auto;
+  height: 40px;
+  width: 100%;
+  background-color: green;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.users-comments .comment-div {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  background-color: #171717;
+  margin-top: 5px;
+}
+
+.users-comments .comment-input {
+  height: 40px;
+  width: 370px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 2px solid #333;
+  color: white;
+  margin-right: 15px;
+}
+
+.users-comments .comment-input::placeholder {
+  color: grey;
+  padding-left: 10px;
+}
+
+.users-comments .comment-btn {
+  width: 60px;
+  background-color: transparent;
+  border: none;
+  color: grey;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
 
 
 /* FOOTER STARTS =========================== */

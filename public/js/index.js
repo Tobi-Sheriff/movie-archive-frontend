@@ -1,68 +1,71 @@
-// require('dotenv').config();
-// import process from '../../process';
+import { createNav, createElement, createMovie, fetch_function } from '../utils/pageCreation.js';
 
-import { movies } from '../seeds/movieSeed.js';
+async function initializeIndexPage() {
+	createNav();
 
-const apik_key = '';
-const tmdb_api_url = `https://api.themoviedb.org/3/movie/popular?api_key=${apik_key}`;
-const my_api_url = `http://localhost:8000/v1/movies?page=1&limit=5`;
+	const topControlBtn = createElement('div', { 'class': 'top-control-btn' });
+	const topPrev = createElement('button', { 'class': 'prev-btn', 'data-value': '0' }, 'Prev');
+	const topNext = createElement('button', { 'class': 'next-btn', 'data-value': '1' }, 'Next');
+	topControlBtn.append(topPrev, topNext);
 
-
-function truncate(words, maxLength) {
-	return words.length > maxLength ? `${words.slice(0, maxLength)}…` : words;
-}
-
-function createElement(tag, attributes = {}, text = '') {
-	const element = document.createElement(tag);
-	Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
-	if (text) element.textContent = text;
-	return element;
-}
-
-function createMovie(row, movie) {
-	const column = createElement('div', { class: 'columns' });
-	const figure = createElement('figure');
-	const imageAnchor = createElement('a', { href: 'details' });
-	const movieImage = createElement(
-		'img',
-		{
-			src: `https://image.tmdb.org/t/p/w200//${movie.poster}`,
-			alt: movie.title
-		}
-	);
-	const figcaption = createElement('figcaption');
-	const titleAnchor = createElement('a', { href: 'details' }, truncate(movie.title, 25));
-	const movieYear = createElement('p', { class: 'movie-year' }, movie.release_date);
-
-	imageAnchor.appendChild(movieImage);
-	figure.append(imageAnchor, figcaption);
-	figcaption.append(titleAnchor, movieYear);
-	column.appendChild(figure);
-	row.appendChild(column);
-
-	return row;
-}
-
-function initializeIndexPage() {
 	const movieListing = document.querySelector('.movie-listing.container');
 	const row = document.querySelector('.movie-row');
-
-	fetch(my_api_url)
-		.then((response) => {
-			return response.json();
-		})
-		.then((data) => {
-
-			console.log(data.response);
-			
-			data.response.forEach(movie => createMovie(row, movie));
-		})
-		.catch(err => console.error(err));
-
 	movieListing.appendChild(row);
-	document.body.insertBefore(movieListing, document.querySelector('footer'));
+
+	const BASE_API_URL = `http://localhost:8000/v1/movies`;
+	let initialPage = 1;
+
+	const fetchAndRenderMovies = async (page) => {
+		const MY_API_URL = `${BASE_API_URL}?page=${page}&limit=8`;
+
+		try {
+			const data = await fetch_function(MY_API_URL);
+			let movies = [];
+			movies.push(...data.response);
+
+			row.innerHTML = '';
+			movies.forEach(movie => createMovie(row, movie));
+
+			// Update button `data-value`
+			topPrev.setAttribute('data-value', page - 1);
+			topNext.setAttribute('data-value', page);
+
+			// Disable "Prev" button on the first page
+			if (page <= 1) {
+				topPrev.disabled = true;
+			} else {
+				topPrev.disabled = false;
+			}
+
+			// If there are no more pages, disable "Next" button
+			if (page === data.pagination.totalPages) {
+				topNext.disabled = true;
+			} else {
+				topNext.disabled = false;
+			}
+		} catch (error) {
+			console.error('Failed to fetch movies:', error.message);
+		}
+	};
+
+	// Initial fetch
+	await fetchAndRenderMovies(initialPage);
+
+	// Event listeners for Prev and Next buttons
+	topPrev.addEventListener('click', async () => {
+		let currentPage = parseInt(topNext.getAttribute('data-value'));
+		currentPage -= 1;
+		await fetchAndRenderMovies(currentPage);
+	});
+	topNext.addEventListener('click', async () => {
+		let currentPage = parseInt(topNext.getAttribute('data-value'));
+		currentPage += 1;
+		await fetchAndRenderMovies(currentPage);
+	});
+
+	document.body.insertBefore(topControlBtn, movieListing);
+
+	// document.body.insertBefore(movieListing, document.querySelector('footer'));
 }
 
-window.addEventListener('load', () => {
-	initializeIndexPage();
-});
+window.addEventListener('load', initializeIndexPage);
