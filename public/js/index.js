@@ -16,7 +16,7 @@ async function initializeIndexPage() {
 	let initialPage = 1;
 
 	const fetchAndRenderMovies = async (page) => {
-		const MY_API_URL = `${BASE_API_URL}?page=${page}&limit=8`;
+		const MY_API_URL = `${BASE_API_URL}?page=${page}&limit=12`;
 
 		try {
 			const data = await fetch_function(MY_API_URL);
@@ -33,15 +33,19 @@ async function initializeIndexPage() {
 			// Disable "Prev" button on the first page
 			if (page <= 1) {
 				topPrev.disabled = true;
+				topPrev.setAttribute('class', 'prev-btn disabled');
 			} else {
 				topPrev.disabled = false;
+				topPrev.setAttribute('class', 'prev-btn');
 			}
 
 			// If there are no more pages, disable "Next" button
 			if (page === data.pagination.totalPages) {
 				topNext.disabled = true;
+				topNext.setAttribute('class', 'next-btn disabled');
 			} else {
 				topNext.disabled = false;
+				topNext.setAttribute('class', 'next-btn');
 			}
 		} catch (error) {
 			console.error('Failed to fetch movies:', error.message);

@@ -46,6 +46,12 @@ header .nav-container .right-nav {
   padding: 15px 0;
 }
 
+header .nav-container .search-link {
+  margin: 11px 10px 0 0;
+  color: grey;
+  font-size: 15px;
+}
+
 header .nav-container .right-nav .nav-search {
   height: 40px;
   width: 250px;
@@ -53,12 +59,46 @@ header .nav-container .right-nav .nav-search {
   border-radius: 20px;
   border: 2px solid #333;
   color: white;
+  padding-left: 10px;
 }
 
 header .nav-container .right-nav .nav-search::placeholder {
   color: grey;
-  padding-left: 10px;
 }
+
+
+ul.suggestions {
+  list-style: none;
+  margin: 43px 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 250px;
+  border: none;
+  background-color: #171717;
+  max-height: 200px;
+  /* Optional: Limit height */
+  /* overflow-y: auto; */
+  z-index: 1;
+  display: none;
+  /* Hidden by default */
+}
+
+ul.suggestions a {
+  text-decoration: none;
+  color: #fff;
+}
+
+ul.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+ul.suggestions li:hover {
+  box-shadow: 1px 1px 3px green;
+}
+
 
 /* NAVBAR SYLING ENDS ================================= */
 
@@ -121,6 +161,13 @@ header .nav-container .right-nav .nav-search::placeholder {
   height: 40px;
   margin: 0 5px;
   cursor: pointer;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #777;
+}
+
+.top-control-btn .disabled {
+  color: grey;
 }
 
 .container {
@@ -148,6 +195,7 @@ header .nav-container .right-nav .nav-search::placeholder {
 
 .movie-listing img:hover {
   border: 5px #6ac045 solid;
+  opacity: 0.7;
 }
 
 .movie-listing figcaption a {
@@ -341,29 +389,34 @@ header .nav-container .right-nav .nav-search::placeholder {
 }
 
 
-/* MOVIE DETAILS ENDS =================================*/
+/* MOVIE DETAILS ENDS ================================= */
 
 /* HOMEPAGE BODY STYLING ENDS ========================= */
 
 
 
-/* Search field */
+/* Search field ==================================================== */
+.big-search {
+  background-color: #171717;
+  height: 200px;
+  margin-top: 5px;
+  padding-top: 50px;
+}
+
 .big-search form {
-  width: 60%;
-  margin: 30px auto;
+  width: 70%;
+  margin: 0 auto;
   align-items: center;
 }
 
 .big-search input {
-  width: 80%;
-  height: 55px;
+  width: 85%;
+  height: 50px;
   margin: 0 auto;
   color: white;
-  background-color: transparent;
-  border: 1px solid grey;
-  border-right: none;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  background-color: #282828;
+  border: none;
+  border-radius: 5px;
   padding-left: 20px;
   font-size: 18px;
 }
@@ -374,15 +427,15 @@ header .nav-container .right-nav .nav-search::placeholder {
 
 .big-search button {
   cursor: pointer;
-  width: 20%;
-  height: 55px;
+  width: 13%;
+  height: 50px;
   float: right;
   font-size: 100%;
   color: white;
+  font-weight: 600;
   background-color: green;
   border: none;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-radius: 5px;
 }
 
 .big-search button:hover {
@@ -390,9 +443,7 @@ header .nav-container .right-nav .nav-search::placeholder {
   border: 1px solid grey;
   box-shadow: 1px 1px 3px green;
 }
-
-/* ------------------------------------------------------------------------------------------------ */
-
+/* --------------------------------------------------------------------------------------- */
 
 
 

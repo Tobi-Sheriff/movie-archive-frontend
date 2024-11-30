@@ -307,7 +307,7 @@ async function commentsSection(movie, comments, commentPagination, INITIAL_LIMIT
 			createElement('span', { class: 'post-span' }, '9/10')
 		);
 
-		const reviewText = createElement('p', {}, 'Lorem ipsum review text...');
+		const reviewText = createElement('p', {}, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta sapiente necessitatibus laborum odio nobis illum quas.');
 		const readMoreLink = createElement('span', { class: 'read-more' }, 'Read more');
 		reviewDetails.append(reviewedByContainer, reviewText, readMoreLink);
 
