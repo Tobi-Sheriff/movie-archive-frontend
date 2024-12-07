@@ -1,45 +1,86 @@
-import { createNav, createElement, createMovie, fetch_function } from '../utils/pageCreation.js';
+import {
+  createNav,
+  createElement,
+  fetchAndRenderMovies,
+  fetch_function
+} from './utils/pageCreation.js';
 
-async function initializeIndexPage() {
+async function initializeSearchPage() {
   createNav();
 
   const searchContainer = document.querySelector('.big-search');
-  const bigSearchForm = createElement('form', { action: '/search' });
-  const bigSearchInput = createElement('input', { class: 'search-input', type: 'text', placeholder: 'Search..', name: 'search' });
-  const bigSearchBtn = createElement('button', { type: 'submit' }, 'Search');
+  const bigSearchForm = createElement('form', { 'action': '/search' });
+  const bigSearchInput = createElement('input', { 'class': 'search-input', 'type': 'text', 'placeholder': 'Search..', 'name': 'search', 'autocomplete': 'off' });
+  const bigSearchBtn = createElement('button', { 'type': 'submit' }, 'Search');
 
   bigSearchForm.append(bigSearchInput, bigSearchBtn);
   searchContainer.append(bigSearchForm);
 
   bigSearchForm.addEventListener('submit', () => {
-    localStorage.setItem('setQuery', bigSearchInput.value);
+    localStorage.setItem('searchQuery', bigSearchInput.value);
   })
 
   const movieListing = document.querySelector('.movie-listing.container');
   const row = document.querySelector('.movie-row');
+  movieListing.append(row);
 
-  const BASE_API_URL = `http://localhost:8000/v1/movies`;
-  let MY_API_URL;
-  let searchValue;
-  if (localStorage.getItem('searchQuery') != null) {
-    searchValue = localStorage.getItem('searchQuery');
-    MY_API_URL = `${BASE_API_URL}/search?q=${searchValue}&page=1&limit=8`;
-    localStorage.clear();
-  } else if (localStorage.getItem('setQuery') != null) {
-    searchValue = localStorage.getItem('setQuery');
-    MY_API_URL = `${BASE_API_URL}/search?q=${searchValue}&page=1&limit=8`;
-    localStorage.clear();
-  } else {
-		MY_API_URL = `${BASE_API_URL}?page=1&limit=12`;
+  const topControlBtn = createElement('div', { 'class': 'top-control-btn' });
+  const backSkip = createElement('button', { 'class': 'back-skip-btn' }, '<<<');
+  const topPrev = createElement('button', { 'class': 'prev-btn' }, 'Prev');
+  const topNext = createElement('button', { 'class': 'next-btn' }, 'Next');
+  const forwardSkip = createElement('button', { 'class': 'forward-skip-btn' }, '>>>');
+  topControlBtn.append(backSkip, topPrev, topNext, forwardSkip);
+
+  const INITIAL_PAGE = 1;
+  const baseApiUrl = `http://localhost:8000/v1/movies`;
+
+  let myApiUrl;
+  const callRenderMovies = async (currentPage) => {
+    try {
+      if (localStorage.getItem('searchQuery')) {
+        const searchValue = localStorage.getItem('searchQuery');
+        const myApiUrl = `${baseApiUrl}/search?q=${searchValue}&page=${currentPage}&limit=8`;
+        const data = await fetch_function(myApiUrl);
+
+        await fetchAndRenderMovies(data, row, currentPage, backSkip, topPrev, topNext, forwardSkip);
+      } else {
+        myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;
+        const data = await fetch_function(myApiUrl);
+        await fetchAndRenderMovies(data, row, currentPage, backSkip, topPrev, topNext, forwardSkip);
+      }
+    } catch (error) {
+      console.error('Failed to fetch movies:', error.message);
+    }
   }
 
-  const data = await fetch_function(MY_API_URL);
-  let movies = [];
-  movies.push(...data.response);
+  // Initial render
+  callRenderMovies(INITIAL_PAGE);
 
-  movies.forEach(movie => createMovie(row, movie));
+  // Event listeners for Prev and Next buttons
+  topPrev.addEventListener('click', async () => {
+    let currentPage = parseInt(topPrev.getAttribute('data-value'));
+    currentPage -= 1;
+    await callRenderMovies(currentPage);
+  });
+  topNext.addEventListener('click', async () => {
+    let currentPage = parseInt(topNext.getAttribute('data-value'));
+    currentPage += 1;
+    await callRenderMovies(currentPage);
+  });
 
-  movieListing.append(row);
+  // Event listeners for back skip and forward skip buttons
+  backSkip.addEventListener('click', async () => {
+    let currentPage = parseInt(backSkip.getAttribute('data-value'));
+    currentPage -= 5;
+    await callRenderMovies(currentPage);
+  });
+  forwardSkip.addEventListener('click', async () => {
+    let currentPage = parseInt(forwardSkip.getAttribute('data-value'));
+    currentPage += 5;
+    await callRenderMovies(currentPage);
+  });
+
+  document.body.insertBefore(topControlBtn, movieListing);
 }
 
-window.addEventListener('load', initializeIndexPage);
+window.addEventListener('load', initializeSearchPage);

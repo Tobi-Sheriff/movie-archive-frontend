@@ -77,7 +77,7 @@ export const genres = [
   }
 ]
 
-const truncate = (words, maxLength) => {
+export const truncate = (words, maxLength) => {
   return words.length > maxLength ? `${words.slice(0, maxLength)}…` : words;
 }
 
@@ -92,7 +92,7 @@ export const createNav = () => {
   const nav = document.querySelector('.nav-container');
   const logoDiv = createElement('div', { 'class': 'logo' });
   const logoLink = createElement('a', { 'class': 'nav-link', 'href': 'index' });
-  const logoImg = createElement('img', { 'src': 'images/logo-YTS.svg', 'alt': 'logo' });
+  const logoImg = createElement('img', { 'src': 'images/TMA-logo.png', 'alt': 'logo' });
 
   logoLink.appendChild(logoImg);
   logoDiv.appendChild(logoLink);
@@ -114,27 +114,9 @@ export const createNav = () => {
   form.appendChild(input);
   rightNavDiv.append(searchLink, form, ul);
 
-  form.addEventListener('submit', () => {
+  form.addEventListener('submit', async () => {
     localStorage.setItem('searchQuery', input.value);
   });
-
-  // Simulated movie data or fetch it from an API
-  const movieTitles = [
-    "The boy",
-    "Avatar",
-    "Avengers",
-    "Black Panther",
-    "The Batman",
-    "The Dark Knight",
-    "Iron Man",
-    "Spider-Man",
-    "The up and the go",
-    "The mango is green",
-    "Superman Returns",
-    "Check the Man",
-    "This is the End",
-    "The end is new",
-  ];
 
   input.addEventListener("input", async (event) => {
     const query = event.target.value.trim().toLowerCase();
@@ -145,13 +127,11 @@ export const createNav = () => {
 
     if (query.length === 0) return;
 
-    const SEARCH_API_URL = `http://localhost:8000/v1/movies/search?q=${query}&page=1&limit=10`;
-    const data = await fetch_function(SEARCH_API_URL);
+    const searchApiUrl = `http://localhost:8000/v1/movies/search?q=${query}&page=1&limit=10`;
+    const data = await fetch_function(searchApiUrl);
 
     // Filter suggestions
-    const filteredMovies = data.response.filter((movie) =>
-      movie.title.toLowerCase().includes(query)
-    ).slice(0, 5);
+    const filteredMovies = data.response.slice(0, 5);
 
     // Create list and  Populate dropdown
     filteredMovies.forEach((movie) => {
@@ -161,7 +141,6 @@ export const createNav = () => {
 
       // Handle selection
       listLink.addEventListener("click", () => {
-        // searchInput.value = movie.title; // Set selected movie in the input
         ul.innerHTML = ""; // Clear suggestions
         ul.style.display = "none";
       });
@@ -175,20 +154,21 @@ export const createNav = () => {
   });
 
   // Hide suggestions if clicking outside
-  document.addEventListener("click", (e) => {
+  document.addEventListener('click', (e) => {
     if (!document.querySelector(".right-nav").contains(e.target)) {
       ul.innerHTML = "";
       ul.style.display = "none";
     }
   });
 
-  // Append the logo div, hamburger div, and right-nav div to the nav element
   nav.append(logoDiv, hamburgerDiv, rightNavDiv);
 }
 
 export const createMovie = (row, movie) => {
   const column = createElement('div', { 'class': 'columns', 'data-id': movie.id });
-  const figure = createElement('figure');
+  const figure = createElement('figure', { 'class': 'movie-figure' });
+
+  // Image container
   const imageAnchor = createElement('a', { href: `details/${movie.id}` });
   const movieImage = createElement(
     'img',
@@ -197,20 +177,88 @@ export const createMovie = (row, movie) => {
       alt: movie.title
     }
   );
+
+  let movieGenre = [];
+  movie.genres.forEach(id => {
+    genres.forEach(genre => {
+      if (id === genre.id) {
+        movieGenre.push(genre.name);
+      }
+    })
+  })
+
+  // Hover text container
+  const hoverText = createElement('div', { class: 'hover-text' });
+  const hoverTextData1 = createElement('p', { 'class': 'hover-rating' }, `${movie.ratings.toFixed(1)} / 10`);
+  hoverText.appendChild(hoverTextData1);
+  movieGenre.forEach(genre => {
+    hoverText.append(createElement('p', { 'class': 'hover-genre' }, `${genre}`));
+  })
+
+  // Movie title and release year
   const figcaption = createElement('figcaption');
   const MAX_LENGTH = 25;
   const titleAnchor = createElement('a', { href: 'details' }, truncate(movie.title, MAX_LENGTH));
-	const movieYear = movie.release_date.split("-");
-  const releaseYear = createElement('p', { class: 'movie-year' }, movieYear);
+  const movieYear = movie.release_date.split("-");
+  const releaseYear = createElement('p', { class: 'movie-year' }, movieYear[0]);
 
-  imageAnchor.appendChild(movieImage);
-  figure.append(imageAnchor, figcaption);
+  // Append elements
+  imageAnchor.append(movieImage, hoverText);
   figcaption.append(titleAnchor, releaseYear);
+  figure.append(imageAnchor, figcaption);
   column.appendChild(figure);
   row.appendChild(column);
 
   return row;
 }
+
+export const fetchAndRenderMovies = async (data, row, page, backSkip, topPrev, topNext, forwardSkip) => {
+  let movies = [];
+  movies.push(...data.response);
+
+  row.innerHTML = '';
+  movies.forEach(movie => createMovie(row, movie));
+
+  // Update button `data-value`
+  topPrev.setAttribute('data-value', page);
+  topNext.setAttribute('data-value', page);
+  backSkip.setAttribute('data-value', page);
+  forwardSkip.setAttribute('data-value', page);
+
+  if (page <= 1) {
+    topPrev.setAttribute('class', 'prev-btn disabled');
+    topPrev.disabled = true;
+    backSkip.setAttribute('class', 'back-skip-btn disabled');
+    backSkip.disabled = true;
+  } else if (page > 1 && page < 6) {
+    topPrev.setAttribute('class', 'prev-btn');
+    topPrev.disabled = false;
+    backSkip.setAttribute('class', 'back-skip-btn disabled');
+    backSkip.disabled = true;
+  } else {
+    topPrev.setAttribute('class', 'prev-btn');
+    topPrev.disabled = false;
+    backSkip.setAttribute('class', 'back-skip-btn');
+    backSkip.disabled = false;
+  }
+
+  if (page >= data.pagination.totalPages) {
+    topNext.setAttribute('class', 'next-btn disabled');
+    topNext.disabled = true;
+    forwardSkip.setAttribute('class', 'forward-skip-btn disabled');
+    forwardSkip.disabled = true;
+  } else if ((page > (data.pagination.totalPages - 5)) && (page < data.pagination.totalPages)) {
+    topNext.setAttribute('class', 'next-btn');
+    topNext.disabled = false;
+    forwardSkip.setAttribute('class', 'forward-skip-btn disabled');
+    forwardSkip.disabled = true;
+  } else {
+    topNext.setAttribute('class', 'next-btn');
+    topNext.disabled = false;
+    forwardSkip.setAttribute('class', 'forward-skip-btn');
+    forwardSkip.disabled = false;
+  }
+};
 
 export const fetch_function = async (my_api_url) => {
   try {

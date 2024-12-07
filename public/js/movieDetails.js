@@ -1,6 +1,6 @@
-import { createNav, genres, createElement, fetch_function } from '../utils/pageCreation.js';
+import { genres, truncate, createNav, createElement, fetch_function } from './utils/pageCreation.js';
 
-async function detailsSection(movie) {
+async function createDetailsSection(movie) {
 	const detailSection = createElement('section', { class: 'details-section' });
 	const movieInfo = createElement('div', { class: 'movie-info' });
 	const movieDiv = createElement('div', { class: 'movie-image' });
@@ -18,22 +18,15 @@ async function detailsSection(movie) {
 	const movieYear = movie.release_date.split("-");
 	const yearElement = createElement('p', { class: 'year' }, movieYear[0]);
 
-	let movieGenre = [];
-	movie.genres.forEach(id => {
-		genres.forEach(genre => {
-			if (id === genre.id) {
-				movieGenre.push(genre.name);
-			}
-		})
-	})
+	const movieGenre = movie.genres.map(id => genres.find(genre => genre.id === id).name);
+
 	const splitGenre = movieGenre.join(" / ");
 
 	const genresElement = createElement('p', { class: 'genre' }, splitGenre);
 	const likesElement = createElement('p', {}, `Likes: ${movie.likes}`);
-	const ratingsTitle = createElement('h2', {}, 'Official Ratings');
-	const rottenTomatoes = createElement('p', {}, 'Rotten Tomatoes');
-	const imdb = createElement('p', {}, 'IMDB');
-	movieDetails.append(titleElement, yearElement, genresElement, likesElement, ratingsTitle, rottenTomatoes, imdb);
+	const ratingsTitle = createElement('h2', {}, 'TMDB Ratings');
+	const rottenTomatoes = createElement('p', {}, movie.ratings.toFixed(1));
+	movieDetails.append(titleElement, yearElement, genresElement, likesElement, ratingsTitle, rottenTomatoes);
 
 
 	const similarMoviesContainer = await createSimilarMovies(movie);
@@ -45,6 +38,7 @@ async function detailsSection(movie) {
 	return detailSection;
 }
 
+// Create similar movies
 async function createSimilarMovies(movie) {
 	const similarMoviesContainer = createElement('div', { class: 'similar-movies' });
 	const similarMoviesTitle = createElement('h1', {}, 'Similar movies');
@@ -64,7 +58,7 @@ async function createSimilarMovies(movie) {
 		const movieImage = createElement(
 			'img',
 			{
-				src: `https://image.tmdb.org/t/p/w200//${movie.poster}`,
+				src: `https://image.tmdb.org/t/p/w200${movie.poster}`,
 				alt: `${movie.title}`
 			}
 		);
@@ -77,15 +71,14 @@ async function createSimilarMovies(movie) {
 	return similarMoviesContainer;
 }
 
-
-async function trailerSection(movie) {
-	const trailerSection = createElement('section', { class: 'trailer-section' });
+async function createTrailerSection(movie) {
+	const createTrailerSection = createElement('section', { class: 'trailer-section' });
 	const trailerRow = createElement('div', { class: 'trailer-row' });
 
 	const movieTrailer = createElement('div', { class: 'movie-trailer' });
 
 	const movieSource = createElement('iframe', {
-		src: `https://www.youtube.com/embed/${movie.trailer}`,
+		src: `https://www.youtube.com/embed/${movie.trailers}`,
 		width: '300',
 		height: '315',
 		frameborder: '0',
@@ -100,7 +93,7 @@ async function trailerSection(movie) {
 		const image = createElement(
 			'img',
 			{
-				src: `https://image.tmdb.org/t/p/w300//${movie.backdrop[index]}`,
+				src: `https://image.tmdb.org/t/p/w300//${movie.backdrops[index]}`,
 				alt: 'Image description'
 			}
 		);
@@ -110,14 +103,13 @@ async function trailerSection(movie) {
 	});
 
 	trailerRow.append(movieTrailer, ...thumbnails);
-	trailerSection.appendChild(trailerRow);
+	createTrailerSection.appendChild(trailerRow);
 
-	return trailerSection;
+	return createTrailerSection;
 }
 
-
-async function summarySection(movie) {
-	const summarySection = createElement('section', { class: 'summary-section' });
+async function createSummarySection(movie) {
+	const createSummarySection = createElement('section', { class: 'summary-section' });
 
 	// Plot Summary
 	const movieSummary = createElement('div', { class: 'movie-summary' });
@@ -140,11 +132,11 @@ async function summarySection(movie) {
 		createElement(
 			'img',
 			{
-				src: `https://image.tmdb.org/t/p/w200/${movie.director[0].profile}`,
+				src: `https://image.tmdb.org/t/p/w200/${movie.directors[0].profile}`,
 				alt: 'Director Image'
 			}
 		),
-		createElement('p', {}, `${movie.director[0].name}`)
+		createElement('p', {}, `${movie.directors[0].name}`)
 	);
 	directorSection.appendChild(directortContent)
 
@@ -155,7 +147,7 @@ async function summarySection(movie) {
 	);
 
 	// let content;
-	movie.top_cast.forEach(cast => {
+	movie.top_casts.forEach(cast => {
 		const content = createElement('div', { class: 'content' });
 		content.append(
 			createElement(
@@ -173,13 +165,13 @@ async function summarySection(movie) {
 
 	movieArtists.append(directorSection, topCastSection);
 	movieSummary.append(plotSummary, movieArtists);
-	summarySection.appendChild(movieSummary);
+	createSummarySection.appendChild(movieSummary);
 
-	return summarySection;
+	return createSummarySection;
 }
 
-async function commentsSection(movie, comments, commentPagination, INITIAL_LIMIT) {
-	const commentsSection = createElement('section', { class: 'comments-section' });
+async function createCommentsSection(movie, comments, commentPagination, INITIAL_LIMIT) {
+	const createCommentsSection = createElement('section', { class: 'comments-section' });
 	const movieReviews = createElement('div', { class: 'movie-reviews' });
 
 	// User Comments Section
@@ -198,9 +190,16 @@ async function commentsSection(movie, comments, commentPagination, INITIAL_LIMIT
 			const commentContent = createElement('div', { class: 'comment-content' });
 
 			const divContainer = createElement('div', {});
+
+			const dateData = new Date(comment.created_at);
+			const dateToLocale = dateData.toLocaleString().split(',');
 			divContainer.append(
-				createElement('p', { class: 'user-name' }, comment.author),
-				createElement('p', {}, comment.content)
+				createElement(
+					'p',
+					{ class: 'user-name' },
+					`${comment.author} ${dateToLocale[0]} at ${dateToLocale[1]}`
+				),
+				createElement('p', {}, comment.content),
 			);
 
 			commentContent.append(
@@ -226,10 +225,10 @@ async function commentsSection(movie, comments, commentPagination, INITIAL_LIMIT
 		const NEW_LIMIT = CURRENT_LIMIT + 10; // Increase limit by 10
 		loadComments.setAttribute('data-limit', NEW_LIMIT);
 
-		const COMMENT_API_URL = `http://localhost:8000/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
+		const commentApiUrl = `http://localhost:8000/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
 
 		try {
-			const commentResults = await axios.get(COMMENT_API_URL);
+			const commentResults = await axios.get(commentApiUrl);
 			const newComments = commentResults.data.response;
 
 			renderComments(newComments); // Re-render with new comments
@@ -280,7 +279,7 @@ async function commentsSection(movie, comments, commentPagination, INITIAL_LIMIT
 		};
 
 		try {
-			const response = await axios.post(
+			await axios.post(
 				`http://localhost:8000/v1/movies/${movie.id}/comments`,
 				JSON.stringify(commentData),
 				{ headers: { 'Content-Type': 'application/json' } }
@@ -294,32 +293,35 @@ async function commentsSection(movie, comments, commentPagination, INITIAL_LIMIT
 
 	// IMDb Reviews Section
 	const imdbReviews = createElement('div', { class: 'imdb-reviews' });
-	const imdbReviewTitle = createElement('h2', {}, 'Movie Reviews');
+	const imdbReviewTitle = createElement('h2', {}, 'TMDB Reviews');
 	imdbReviews.append(imdbReviewTitle);
 
-	for (let i = 0; i < 3; i++) {
-		const reviewDetails = createElement('div', { class: 'review-details' });
+	movie.reviews
+		.slice(0, 3)
+		.forEach(review => {
 
-		const reviewedByContainer = createElement('div', { class: 'reviewd-by' });
-		reviewedByContainer.append(
-			createElement('span', { class: 'pre-span' }, 'Reviewed by'),
-			createElement('p', {}, 'Reviewer Name'),
-			createElement('span', { class: 'post-span' }, '9/10')
-		);
+			const reviewDetails = createElement('div', { class: 'review-details' });
 
-		const reviewText = createElement('p', {}, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta sapiente necessitatibus laborum odio nobis illum quas.');
-		const readMoreLink = createElement('span', { class: 'read-more' }, 'Read more');
-		reviewDetails.append(reviewedByContainer, reviewText, readMoreLink);
+			const reviewedByContainer = createElement('div', { class: 'reviewd-by' });
+			reviewedByContainer.append(
+				createElement('span', { class: 'pre-span' }, 'Reviewed by'),
+				createElement('p', {}, review.author),
+				createElement('span', { class: 'post-span' }, review.rating)
+			);
 
-		imdbReviews.append(reviewDetails, createElement('hr', {}));
-	}
+			const reviewText = createElement('p', {}, truncate(review.content, 300));
+			const readMoreLink = createElement('span', { class: 'read-more' }, 'Read more');
+			reviewDetails.append(reviewedByContainer, reviewText, readMoreLink);
+
+			imdbReviews.append(reviewDetails, createElement('hr', {}));
+		});
+
 
 	movieReviews.append(usersComments, imdbReviews);
-	commentsSection.appendChild(movieReviews);
+	createCommentsSection.appendChild(movieReviews);
 
-	return commentsSection;
+	return createCommentsSection;
 }
-
 
 // Initialize Details Page with all Sections
 async function initializeDetailsPage() {
@@ -328,33 +330,31 @@ async function initializeDetailsPage() {
 	const container = document.querySelector('.container');
 
 	const urlParams = window.location;
-	const MOVIE_ID = urlParams.pathname.split("/")[2];
+	const movieId = urlParams.pathname.split("/")[2];
 	const INITIAL_LIMIT = 10;
 
-	const MOVIE_API_URL = `http://localhost:8000/v1/movies/${MOVIE_ID}`;
-	const COMMENT_API_URL = `http://localhost:8000/v1/movies/${MOVIE_ID}/comments?page=1&limit=${INITIAL_LIMIT}`;
+	const movieApiUrl = `http://localhost:8000/v1/movies/${movieId}`;
+	const commentApiUrl = `http://localhost:8000/v1/movies/${movieId}/comments?page=1&limit=${INITIAL_LIMIT}`;
 
 	let movie = {};
 	let comment = [];
 	let commentPagination = {};
 	try {
-		const results = await axios.get(MOVIE_API_URL);
-		const commentResults = await axios.get(COMMENT_API_URL);
+		const results = await axios.get(movieApiUrl);
+		const commentResults = await axios.get(commentApiUrl);
 
 		movie = { ...results.data.response };
 		comment.push(...commentResults.data.response);
 		commentPagination = { ...commentResults.data.pagination };
-		console.log(commentResults.data);
 	} catch (error) {
 		console.error(`Failed to fetch page`, error.message);
 	}
 
-
 	container.append(
-		await detailsSection(movie),
-		await trailerSection(movie),
-		await summarySection(movie),
-		await commentsSection(movie, comment, commentPagination, INITIAL_LIMIT)
+		await createDetailsSection(movie),
+		await createTrailerSection(movie),
+		await createSummarySection(movie),
+		await createCommentsSection(movie, comment, commentPagination, INITIAL_LIMIT)
 	);
 }
 

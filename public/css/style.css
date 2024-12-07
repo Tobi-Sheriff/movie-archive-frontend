@@ -37,8 +37,13 @@ header .nav-container {
 }
 
 header .nav-container .logo {
-  height: 40px;
-  padding: 15px 0;
+  height: inherit;
+  display: flex;
+  align-items: center;
+}
+
+header .nav-container .logo img {
+  width: 100px;
 }
 
 header .nav-container .right-nav {
@@ -155,10 +160,9 @@ ul.suggestions li:hover {
   margin: 5px 0;
 }
 
-.top-control-btn .prev-btn,
-.top-control-btn .next-btn {
-  width: 80px;
-  height: 40px;
+.top-control-btn button {
+  width: 70px;
+  height: 35px;
   margin: 0 5px;
   cursor: pointer;
   background-color: transparent;
@@ -167,7 +171,8 @@ ul.suggestions li:hover {
 }
 
 .top-control-btn .disabled {
-  color: grey;
+  opacity: 0.5;
+  cursor: default;
 }
 
 .container {
@@ -186,19 +191,57 @@ ul.suggestions li:hover {
   margin: 10px 20px;
 }
 
-.movie-listing img {
+.movie-listing figure a {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.movie-listing figure .hover-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  width: 220px;
+  height: 315px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.movie-listing figure a:hover .hover-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+.movie-listing figure .hover-rating {
+  margin-top: 0;
+}
+.movie-listing figure .hover-genre {
+  margin: 5px 0;
+}
+
+.movie-listing figure img {
   width: 220px;
   height: 315px;
   border: 5px #fff solid;
   border-radius: 5px;
 }
-
-.movie-listing img:hover {
+.movie-listing figure a:hover img {
   border: 5px #6ac045 solid;
-  opacity: 0.7;
+  opacity: 0.4;
 }
 
-.movie-listing figcaption a {
+.movie-listing figure figcaption a {
   font-weight: 700;
   font-size: 15px;
   color: #fff;
@@ -208,11 +251,11 @@ ul.suggestions li:hover {
   display: block;
 }
 
-.movie-listing figcaption a:hover {
+.movie-listing figure figcaption a:hover {
   color: grey;
 }
 
-.movie-listing figcaption .movie-year {
+.movie-listing figure figcaption .movie-year {
   font-size: small;
   color: grey;
   line-height: 0.5;
@@ -443,6 +486,7 @@ ul.suggestions li:hover {
   border: 1px solid grey;
   box-shadow: 1px 1px 3px green;
 }
+
 /* --------------------------------------------------------------------------------------- */
 
 
