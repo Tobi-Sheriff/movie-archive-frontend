@@ -4,8 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "starts": "node index.js",
-    "test": "jest test/"
+    "test": "jest tests/"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +16,8 @@
     "eslint": "^9.16.0",
     "express": "^4.21.1",
     "globals": "^15.13.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

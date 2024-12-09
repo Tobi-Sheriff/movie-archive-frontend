@@ -13,7 +13,12 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        axios: "readonly"
+        axios: "readonly",
+        jest: "readonly",
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly"
       }
     }
   },

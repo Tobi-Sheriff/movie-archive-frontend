@@ -212,7 +212,18 @@ export const createMovie = (row, movie) => {
   return row;
 }
 
-export const fetchAndRenderMovies = async (data, row, page, backSkip, topPrev, topNext, forwardSkip) => {
+const topControlBtn = createElement('div', { 'class': 'top-control-btn' });
+const backSkip = createElement('button', { 'class': 'back-skip-btn' }, '<<<');
+const topPrev = createElement('button', { 'class': 'prev-btn' }, 'Prev');
+const topNext = createElement('button', { 'class': 'next-btn' }, 'Next');
+const forwardSkip = createElement('button', { 'class': 'forward-skip-btn' }, '>>>');
+topControlBtn.append(backSkip, topPrev, topNext, forwardSkip);
+
+export const fetchAndRenderMovies = async (data, page) => {
+  const movieListing = document.querySelector('.movie-listing.container');
+  const row = document.querySelector('.movie-row');
+  movieListing.appendChild(row);
+
   let movies = [];
   movies.push(...data.response);
 
@@ -258,7 +269,45 @@ export const fetchAndRenderMovies = async (data, row, page, backSkip, topPrev, t
     forwardSkip.setAttribute('class', 'forward-skip-btn');
     forwardSkip.disabled = false;
   }
+
+  document.body.insertBefore(topControlBtn, movieListing);
 };
+
+const baseApiUrl = `http://localhost:8000/v1/movies`;
+const callRenderMovies = async (currentPage) => {
+  try {
+    const myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;
+    const data = await fetch_function(myApiUrl);
+
+    await fetchAndRenderMovies(data, currentPage);
+  } catch (error) {
+    console.error('Failed to fetch movies:', error.message);
+  }
+}
+
+// Event listeners for Prev and Next buttons
+topPrev.addEventListener('click', async () => {
+  let currentPage = parseInt(topPrev.getAttribute('data-value'));
+  currentPage -= 1;
+  await callRenderMovies(currentPage);
+});
+topNext.addEventListener('click', async () => {
+  let currentPage = parseInt(topNext.getAttribute('data-value'));
+  currentPage += 1;
+  await callRenderMovies(currentPage);
+});
+
+// Event listeners for back skip and forward skip buttons
+backSkip.addEventListener('click', async () => {
+  let currentPage = parseInt(backSkip.getAttribute('data-value'));
+  currentPage -= 5;
+  await callRenderMovies(currentPage);
+});
+forwardSkip.addEventListener('click', async () => {
+  let currentPage = parseInt(forwardSkip.getAttribute('data-value'));
+  currentPage += 5;
+  await callRenderMovies(currentPage);
+});
 
 export const fetch_function = async (my_api_url) => {
   try {
