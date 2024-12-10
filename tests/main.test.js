@@ -138,9 +138,7 @@ describe('movieDetails', () => {
     axios.get.mockResolvedValueOnce({
       data: {
         response: [
-          {
-            id: 10, movie_id: 1, author: 'Mia Hall', content: 'A very interesting movie, You should watch it'
-          },
+          { id: 10, movie_id: 1, author: 'Mia Hall', content: 'A very interesting movie, You should watch it' },
         ]
       },
     });
