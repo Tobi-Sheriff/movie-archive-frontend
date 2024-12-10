@@ -115,7 +115,8 @@ describe('movieDetails', () => {
   it('Should fetch a movie with using its ID', async () => {
     axios.get.mockResolvedValueOnce({
       data: {
-        response: {
+        response:
+        {
           id: 5, title: '12 Angry Men', release_date: '2010-07-16', genres: [28, 12], ratings: 8.8
         },
       },
@@ -138,9 +139,7 @@ describe('movieDetails', () => {
     axios.get.mockResolvedValueOnce({
       data: {
         response: [
-          {
-            id: 10, movie_id: 1, author: 'Mia Hall', content: 'A very interesting movie, You should watch it'
-          },
+          { id: 10, movie_id: 1, author: 'Mia Hall', content: 'A very interesting movie, You should watch it' },
         ]
       },
     });
