@@ -41,17 +41,6 @@ const movieDetails = async (apiUrl) => {
   }
 };
 
-// // DOM manipulation example
-// const updateMovieList = (movies) => {
-//   const movieList = document.getElementById('movie-list');
-//   movieList.innerHTML = ''; // Clear existing content
-//   movies.forEach((movie) => {
-//     const li = document.createElement('li');
-//     li.textContent = movie.title;
-//     movieList.appendChild(li);
-//   });
-// };
-
 // TEST CASES
 describe('fetchMovies', () => {
   it('should fetch movies from the API', async () => {
@@ -172,37 +161,4 @@ describe('movieDetails', () => {
     const commentCheck = comment.response.map(({ id, created_at, ...rest }) => rest);
     expect(commentCheck).toEqual(expectedResponse);
   });
-
-  // beforeEach(() => {
-  //   // Set up a mock DOM
-  //   document.body.innerHTML = '<ul id="movie-list"></ul>';
-  // });
-
-  //   // it('should update the movie list in the DOM', () => {
-  //   //   const mockMovies = [{ title: 'The Shawshank Redemption' }, { title: '12 Angry Men' }];
-
-  //   //   // Call the function
-  //   //   updateMovieList(mockMovies);
-
-  //   //   // Assert the DOM content
-  //   //   const movieList = document.getElementById('movie-list');
-  //   //   expect(movieList.children.length).toBe(2);
-  //   //   expect(movieList.children[0].textContent).toBe('The Shawshank Redemption');
-  //   //   expect(movieList.children[1].textContent).toBe('12 Angry Men');
-  //   // });
-
-  //   // it('should clear the existing movie list before adding new items', () => {
-  //   //   // Add existing content to the DOM
-  //   //   const movieList = document.getElementById('movie-list');
-  //   //   movieList.innerHTML = '<li>Old Movie</li>';
-
-  //   //   const mockMovies = [{ title: 'The Shawshank Redemption' }];
-
-  //   //   // Call the function
-  //   //   updateMovieList(mockMovies);
-
-  //   //   // Assert the DOM content
-  //   //   expect(movieList.children.length).toBe(1);
-  //   //   expect(movieList.children[0].textContent).toBe('The Shawshank Redemption');
-  //   // });
 });
