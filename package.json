@@ -2,15 +2,22 @@
   "name": "movie-archive-frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "starts": "node index.js",
-    "test": "jest test/"
+    "test": "jest tests/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1"
+    "@eslint/js": "^9.16.0",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.16.0",
+    "express": "^4.21.1",
+    "globals": "^15.13.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

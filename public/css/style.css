@@ -37,13 +37,24 @@ header .nav-container {
 }
 
 header .nav-container .logo {
-  height: 40px;
-  padding: 15px 0;
+  height: inherit;
+  display: flex;
+  align-items: center;
+}
+
+header .nav-container .logo img {
+  width: 100px;
 }
 
 header .nav-container .right-nav {
   display: flex;
   padding: 15px 0;
+}
+
+header .nav-container .search-link {
+  margin: 11px 10px 0 0;
+  color: grey;
+  font-size: 15px;
 }
 
 header .nav-container .right-nav .nav-search {
@@ -52,12 +63,47 @@ header .nav-container .right-nav .nav-search {
   background-color: transparent;
   border-radius: 20px;
   border: 2px solid #333;
+  color: white;
+  padding-left: 10px;
 }
 
 header .nav-container .right-nav .nav-search::placeholder {
   color: grey;
-  padding-left: 10px;
 }
+
+
+ul.suggestions {
+  list-style: none;
+  margin: 43px 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 250px;
+  border: none;
+  background-color: #171717;
+  max-height: 200px;
+  /* Optional: Limit height */
+  /* overflow-y: auto; */
+  z-index: 1;
+  display: none;
+  /* Hidden by default */
+}
+
+ul.suggestions a {
+  text-decoration: none;
+  color: #fff;
+}
+
+ul.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+ul.suggestions li:hover {
+  box-shadow: 1px 1px 3px green;
+}
+
 
 /* NAVBAR SYLING ENDS ================================= */
 
@@ -108,6 +154,27 @@ header .nav-container .right-nav .nav-search::placeholder {
 
 
 /* MOVIE LISTING STARTS ==============================*/
+.top-control-btn {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+
+.top-control-btn button {
+  width: 70px;
+  height: 35px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #777;
+}
+
+.top-control-btn .disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .container {
   margin: 0 10%;
   width: 80%;
@@ -124,29 +191,71 @@ header .nav-container .right-nav .nav-search::placeholder {
   margin: 10px 20px;
 }
 
-.movie-listing img {
+.movie-listing figure a {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.movie-listing figure .hover-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  width: 220px;
+  height: 315px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.movie-listing figure a:hover .hover-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+.movie-listing figure .hover-rating {
+  margin-top: 0;
+}
+.movie-listing figure .hover-genre {
+  margin: 5px 0;
+}
+
+.movie-listing figure img {
   width: 220px;
   height: 315px;
   border: 5px #fff solid;
   border-radius: 5px;
 }
-
-.movie-listing img:hover {
+.movie-listing figure a:hover img {
   border: 5px #6ac045 solid;
+  opacity: 0.4;
 }
 
-.movie-listing figcaption a {
+.movie-listing figure figcaption a {
   font-weight: 700;
   font-size: 15px;
   color: #fff;
   line-height: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
-.movie-listing figcaption a:hover {
+.movie-listing figure figcaption a:hover {
   color: grey;
 }
 
-.movie-listing figcaption .movie-year {
+.movie-listing figure figcaption .movie-year {
   font-size: small;
   color: grey;
   line-height: 0.5;
@@ -185,6 +294,23 @@ header .nav-container .right-nav .nav-search::placeholder {
   width: 40%;
 }
 
+.details-section .movie-info .movie-details h1 {
+  margin-bottom: 25px;
+  font-size: 35px;
+}
+
+.details-section .movie-info .movie-details .year,
+.details-section .movie-info .movie-details .genre {
+  margin: 5px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.details-section .movie-info .movie-details h1,
+.details-section .movie-info .similar-movies h1 {
+  margin-top: 0;
+}
+
 .details-section .movie-info figure {
   margin-left: 0;
 }
@@ -193,8 +319,9 @@ header .nav-container .right-nav .nav-search::placeholder {
   border: 5px #6ac045 solid;
 }
 
-.details-section .similar-movies h1 {
+.details-section .movie-info .similar-movies h1 {
   margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .details-section .similar-movies-box {
@@ -216,7 +343,7 @@ header .nav-container .right-nav .nav-search::placeholder {
 }
 
 
-.trailer-section .trailer-row video,
+.trailer-section .trailer-row iframe,
 .trailer-section .trailer-row img {
   width: 100%;
   height: 100%;
@@ -305,29 +432,34 @@ header .nav-container .right-nav .nav-search::placeholder {
 }
 
 
-/* MOVIE DETAILS ENDS =================================*/
+/* MOVIE DETAILS ENDS ================================= */
 
 /* HOMEPAGE BODY STYLING ENDS ========================= */
 
 
 
-/* Search field */
+/* Search field ==================================================== */
+.big-search {
+  background-color: #171717;
+  height: 200px;
+  margin-top: 5px;
+  padding-top: 50px;
+}
+
 .big-search form {
-  width: 60%;
-  margin: 30px auto;
+  width: 70%;
+  margin: 0 auto;
   align-items: center;
 }
 
 .big-search input {
-  width: 80%;
-  height: 55px;
+  width: 85%;
+  height: 50px;
   margin: 0 auto;
   color: white;
-  background-color: transparent;
-  border: 1px solid grey;
-  border-right: none;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  background-color: #282828;
+  border: none;
+  border-radius: 5px;
   padding-left: 20px;
   font-size: 18px;
 }
@@ -338,15 +470,15 @@ header .nav-container .right-nav .nav-search::placeholder {
 
 .big-search button {
   cursor: pointer;
-  width: 20%;
-  height: 55px;
+  width: 13%;
+  height: 50px;
   float: right;
   font-size: 100%;
   color: white;
+  font-weight: 600;
   background-color: green;
   border: none;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-radius: 5px;
 }
 
 .big-search button:hover {
@@ -355,7 +487,57 @@ header .nav-container .right-nav .nav-search::placeholder {
   box-shadow: 1px 1px 3px green;
 }
 
-/* -------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------------------- */
+
+
+
+/* COMMENT STARTS =========================== */
+.users-comments .scrollable-comments .load-comment {
+  margin: 0 auto;
+  height: 40px;
+  width: 100%;
+  background-color: green;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.users-comments .comment-div {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  background-color: #171717;
+  margin-top: 5px;
+}
+
+.users-comments .comment-input {
+  height: 40px;
+  width: 370px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 2px solid #333;
+  color: white;
+  margin-right: 15px;
+}
+
+.users-comments .comment-input::placeholder {
+  color: grey;
+  padding-left: 10px;
+}
+
+.users-comments .comment-btn {
+  width: 60px;
+  background-color: transparent;
+  border: none;
+  color: grey;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
 
 
 /* FOOTER STARTS =========================== */
