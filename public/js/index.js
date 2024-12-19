@@ -1,10 +1,11 @@
 import { createNav, fetchAndRenderMovies, fetch_function } from './utils/pageCreation.js';
+import { config } from './config/config.js';
 
 async function initializeIndexPage() {
 	createNav();
 
 	const INITIAL_PAGE = 1;
-	const baseApiUrl = `http://localhost:8000/v1/movies`;
+	const baseApiUrl = `${config.devApiUrl}/v1/movies`;
 
 	const callRenderMovies = async (currentPage) => {
 		try {
