@@ -189,7 +189,8 @@ export const createMovie = (row, movie) => {
 
   // Hover text container
   const hoverText = createElement('div', { class: 'hover-text' });
-  const hoverTextData1 = createElement('p', { 'class': 'hover-rating' }, `${movie.ratings.toFixed(1)} / 10`);
+  const parsedRating = parseFloat(movie.ratings);
+  const hoverTextData1 = createElement('p', { 'class': 'hover-rating' }, `${parsedRating.toFixed(1)} / 10`);
   hoverText.appendChild(hoverTextData1);
   movieGenre.forEach(genre => {
     hoverText.append(createElement('p', { 'class': 'hover-genre' }, `${genre}`));

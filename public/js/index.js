@@ -4,7 +4,8 @@ async function initializeIndexPage() {
 	createNav();
 
 	const INITIAL_PAGE = 1;
-	const baseApiUrl = `http://localhost:8000/v1/movies`;
+	const host = 'localhost';
+	const baseApiUrl = `http://${host}:8000/v1/movies`;
 
 	const callRenderMovies = async (currentPage) => {
 		try {

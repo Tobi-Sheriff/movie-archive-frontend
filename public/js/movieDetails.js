@@ -25,7 +25,8 @@ async function createDetailsSection(movie) {
 	const genresElement = createElement('p', { class: 'genre' }, splitGenre);
 	const likesElement = createElement('p', {}, `Likes: ${movie.likes}`);
 	const ratingsTitle = createElement('h2', {}, 'TMDB Ratings');
-	const rottenTomatoes = createElement('p', {}, movie.ratings.toFixed(1));
+  const parsedRating = parseFloat(movie.ratings);
+	const rottenTomatoes = createElement('p', {}, parsedRating.toFixed(1));
 	movieDetails.append(titleElement, yearElement, genresElement, likesElement, ratingsTitle, rottenTomatoes);
 
 
