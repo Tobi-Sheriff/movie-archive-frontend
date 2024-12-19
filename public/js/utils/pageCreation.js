@@ -1,3 +1,4 @@
+import { config } from '../config/config.js';
 export const genres = [
   {
     "id": 28,
@@ -127,7 +128,7 @@ export const createNav = () => {
 
     if (query.length === 0) return;
 
-    const searchApiUrl = `http://localhost:8000/v1/movies/search?q=${query}&page=1&limit=10`;
+    const searchApiUrl = `${config.devApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
     const data = await fetch_function(searchApiUrl);
 
     // Filter suggestions
@@ -274,7 +275,7 @@ export const fetchAndRenderMovies = async (data, page) => {
   document.body.insertBefore(topControlBtn, movieListing);
 };
 
-const baseApiUrl = `http://localhost:8000/v1/movies`;
+const baseApiUrl = `${config.devApiUrl}/v1/movies`;
 const callRenderMovies = async (currentPage) => {
   try {
     const myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;

@@ -1,4 +1,5 @@
 import { genres, truncate, createNav, createElement, fetch_function } from './utils/pageCreation.js';
+import { config } from './config/config.js';
 
 async function createDetailsSection(movie) {
 	const detailSection = createElement('section', { class: 'details-section' });
@@ -46,7 +47,7 @@ async function createSimilarMovies(movie) {
 	const similarMoviesBox = createElement('div', { class: 'similar-movies-box' });
 	const imagesContainer = createElement('div');
 
-	const MY_API_URL = `http://localhost:8000/v1/movies/${movie.id}/similar-movies?page=1&limit=10`;
+	const MY_API_URL = `${config.devApiUrl}/v1/movies/${movie.id}/similar-movies?page=1&limit=10`;
 
 	const data = await fetch_function(MY_API_URL);
 	let movies = [];
@@ -226,7 +227,7 @@ async function createCommentsSection(movie, comments, commentPagination, INITIAL
 		const NEW_LIMIT = CURRENT_LIMIT + 10; // Increase limit by 10
 		loadComments.setAttribute('data-limit', NEW_LIMIT);
 
-		const commentApiUrl = `http://localhost:8000/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
+		const commentApiUrl = `${config.devApiUrl}/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
 
 		try {
 			const commentResults = await axios.get(commentApiUrl);
@@ -281,7 +282,7 @@ async function createCommentsSection(movie, comments, commentPagination, INITIAL
 
 		try {
 			await axios.post(
-				`http://localhost:8000/v1/movies/${movie.id}/comments`,
+				`${config.devApiUrl}/v1/movies/${movie.id}/comments`,
 				JSON.stringify(commentData),
 				{ headers: { 'Content-Type': 'application/json' } }
 			);
@@ -334,8 +335,8 @@ async function initializeDetailsPage() {
 	const movieId = urlParams.pathname.split("/")[2];
 	const INITIAL_LIMIT = 10;
 
-	const movieApiUrl = `http://localhost:8000/v1/movies/${movieId}`;
-	const commentApiUrl = `http://localhost:8000/v1/movies/${movieId}/comments?page=1&limit=${INITIAL_LIMIT}`;
+	const movieApiUrl = `${config.devApiUrl}/v1/movies/${movieId}`;
+	const commentApiUrl = `${config.devApiUrl}/v1/movies/${movieId}/comments?page=1&limit=${INITIAL_LIMIT}`;
 
 	let movie = {};
 	let comment = [];
