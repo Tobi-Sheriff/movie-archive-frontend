@@ -1,3 +1,4 @@
+import { config } from '../config/config.js';
 export const genres = [
   {
     "id": 28,
@@ -127,7 +128,7 @@ export const createNav = () => {
 
     if (query.length === 0) return;
 
-    const searchApiUrl = `http://localhost:8000/v1/movies/search?q=${query}&page=1&limit=10`;
+    const searchApiUrl = `${config.devApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
     const data = await fetch_function(searchApiUrl);
 
     // Filter suggestions
@@ -189,7 +190,8 @@ export const createMovie = (row, movie) => {
 
   // Hover text container
   const hoverText = createElement('div', { class: 'hover-text' });
-  const hoverTextData1 = createElement('p', { 'class': 'hover-rating' }, `${movie.ratings.toFixed(1)} / 10`);
+  const parsedRating = parseFloat(movie.ratings);
+  const hoverTextData1 = createElement('p', { 'class': 'hover-rating' }, `${parsedRating.toFixed(1)} / 10`);
   hoverText.appendChild(hoverTextData1);
   movieGenre.forEach(genre => {
     hoverText.append(createElement('p', { 'class': 'hover-genre' }, `${genre}`));
@@ -273,7 +275,7 @@ export const fetchAndRenderMovies = async (data, page) => {
   document.body.insertBefore(topControlBtn, movieListing);
 };
 
-const baseApiUrl = `http://localhost:8000/v1/movies`;
+const baseApiUrl = `${config.devApiUrl}/v1/movies`;
 const callRenderMovies = async (currentPage) => {
   try {
     const myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;

@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(express.json());
 
-app.get('/index', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
