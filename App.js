@@ -21,7 +21,6 @@ app.get('/search', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/search.html'));
 });
 
-
 app.listen(3000, () => {
     console.log(`Listening on port 3000`);
 })
