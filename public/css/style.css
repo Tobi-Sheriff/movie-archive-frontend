@@ -226,6 +226,7 @@ ul.suggestions li:hover {
 .movie-listing figure .hover-rating {
   margin-top: 0;
 }
+
 .movie-listing figure .hover-genre {
   margin: 5px 0;
 }
@@ -236,6 +237,7 @@ ul.suggestions li:hover {
   border: 5px #fff solid;
   border-radius: 5px;
 }
+
 .movie-listing figure a:hover img {
   border: 5px #6ac045 solid;
   opacity: 0.4;
@@ -299,11 +301,14 @@ ul.suggestions li:hover {
   font-size: 35px;
 }
 
-.details-section .movie-info .movie-details .year,
-.details-section .movie-info .movie-details .genre {
-  margin: 5px 0;
+.details-section .movie-info .movie-details h2 {
+  font-size: 22px;
+}
+
+.details-section .movie-info .movie-details p {
+  margin: 8px 0;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .details-section .movie-info .movie-details h1,
@@ -513,14 +518,19 @@ ul.suggestions li:hover {
   margin-top: 5px;
 }
 
-.users-comments .comment-input {
+.users-comments .comment-div .comment-form {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.comments-section .users-comments .comment-div .comment-input {
   height: 40px;
-  width: 370px;
+  width: 65%;
   background-color: transparent;
   border-radius: 5px;
   border: 2px solid #333;
   color: white;
-  margin-right: 15px;
 }
 
 .users-comments .comment-input::placeholder {
@@ -528,13 +538,13 @@ ul.suggestions li:hover {
   padding-left: 10px;
 }
 
-.users-comments .comment-btn {
-  width: 60px;
-  background-color: transparent;
+.comments-section .users-comments .comment-div .comment-btn {
+  width: 25%;
+  background-color: green;
   border: none;
-  color: grey;
+  color: white;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 100%;
 }
 
 /* ------------------------------------------------------------------------------------------------ */
@@ -610,7 +620,63 @@ ul.suggestions li:hover {
   .summary-section .movie-summary,
   .comments-section .movie-reviews {
     flex-wrap: wrap;
+    margin-top: 50px;
   }
+
+  .details-section .movie-info .movie-image img {
+    width: 150px;
+    height: 250px;
+    border: 5px #fff solid;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .details-section .movie-info .movie-details {
+    width: 40%;
+  }
+
+  .details-section .movie-info .movie-details h1 {
+    margin-bottom: 15px;
+    font-size: 28px;
+  }
+
+  .details-section .movie-info .movie-details h2 {
+    margin-bottom: 5px;
+    font-size: 15px;
+  }
+
+  .details-section .movie-info .movie-details p {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .details-section .movie-info .similar-movies {
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .details-section .movie-info .similar-movies .similar-movies-box {
+    width: inherit;
+  }
+
+  .details-section .movie-info .similar-movies .similar-movies-box div a {
+    margin: 0 10px;
+  }
+
+  .details-section .movie-info .similar-movies .similar-movies-box div img {
+    width: 120px;
+  }
+
+  .details-section .movie-info .movie-details h1,
+  .details-section .movie-info .similar-movies h1 {
+    margin-top: 0;
+  }
+
+  /* .details-section .movie-info .movie-image {
+    
+  } */
 
   .trailer-section .trailer-row .movie-trailer,
   .trailer-section .trailer-row .movie-image {
@@ -619,9 +685,9 @@ ul.suggestions li:hover {
 
   .trailer-section .trailer-row video,
   .trailer-section .trailer-row img {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0;
+    /* width: 100%;
+    height: 100%; */
+    padding-top: 30px;
   }
 
   .summary-section .movie-summary .plot-summary {
@@ -634,6 +700,14 @@ ul.suggestions li:hover {
 
   .comments-section .users-comments {
     width: 100%;
+  }
+
+  .comments-section .users-comments .comment-div .comment-input {
+    width: 65%;
+  }
+
+  .comments-section .users-comments .comment-div .comment-btn {
+    width: 25%;
   }
 
   .comments-section .imdb-reviews {

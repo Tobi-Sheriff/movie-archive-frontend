@@ -92,7 +92,7 @@ export const createElement = (tag, attributes = {}, text = '') => {
 export const createNav = () => {
   const nav = document.querySelector('.nav-container');
   const logoDiv = createElement('div', { 'class': 'logo' });
-  const logoLink = createElement('a', { 'class': 'nav-link', 'href': 'index' });
+  const logoLink = createElement('a', { 'class': 'nav-link', 'href': '/' });
   const logoImg = createElement('img', { 'src': 'images/TMA-logo.png', 'alt': 'logo' });
 
   logoLink.appendChild(logoImg);
