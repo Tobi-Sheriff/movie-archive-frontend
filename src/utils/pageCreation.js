@@ -89,11 +89,12 @@ export const createElement = (tag, attributes = {}, text = '') => {
   return element;
 }
 
+import logo from '../images/TMA-logo.png';
 export const createNav = () => {
   const nav = document.querySelector('.nav-container');
   const logoDiv = createElement('div', { 'class': 'logo' });
   const logoLink = createElement('a', { 'class': 'nav-link', 'href': '/' });
-  const logoImg = createElement('img', { 'src': 'images/TMA-logo.png', 'alt': 'logo' });
+  const logoImg = createElement('img', { 'src': logo, 'alt': 'logo' });
 
   logoLink.appendChild(logoImg);
   logoDiv.appendChild(logoLink);

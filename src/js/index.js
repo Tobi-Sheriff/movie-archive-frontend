@@ -1,5 +1,6 @@
-import { createNav, fetchAndRenderMovies, fetch_function } from './utils/pageCreation.js';
-import { config } from './config/config.js';
+import { createNav, fetchAndRenderMovies, fetch_function } from '../utils/pageCreation.js';
+import { config } from '../config/config.js';
+import '../css/style.css';
 
 async function initializeIndexPage() {
 	createNav();
