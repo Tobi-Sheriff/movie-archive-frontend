@@ -1,5 +1,6 @@
-import { genres, truncate, createNav, createElement, fetch_function } from './utils/pageCreation.js';
-import { config } from './config/config.js';
+import { genres, truncate, createNav, createElement, fetch_function } from '../utils/pageCreation.js';
+import { config } from '../config/config.js';
+import '../css/style.css';
 
 async function createDetailsSection(movie) {
 	const detailSection = createElement('section', { class: 'details-section' });

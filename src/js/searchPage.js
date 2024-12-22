@@ -3,9 +3,9 @@ import {
   createElement,
   fetchAndRenderMovies,
   fetch_function
-} from './utils/pageCreation.js';
-import { config } from './config/config.js';
-
+} from '../utils/pageCreation.js';
+import { config } from '../config/config.js';
+import '../css/style.css';
 
 async function initializeSearchPage() {
   createNav();
