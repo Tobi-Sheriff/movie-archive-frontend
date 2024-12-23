@@ -8,9 +8,6 @@
     "test": "jest tests/",
     "dev": "rimraf dist && webpack --mode development",
     "build": "rimraf dist && webpack --mode production"
-    "test": "jest tests/",
-    "dev": "rimraf dist && webpack --mode development",
-    "build": "rimraf dist && webpack --mode production"
   },
   "keywords": [],
   "author": "",
