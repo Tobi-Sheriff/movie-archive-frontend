@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "jest tests/",
     "dev": "rimraf dist && webpack --mode development",
