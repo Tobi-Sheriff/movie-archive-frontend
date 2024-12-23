@@ -61,7 +61,7 @@ async function createSimilarMovies(movie) {
 
 	const MAX_DISPLAY = 4;
 	movies.slice(0, MAX_DISPLAY).forEach(movie => {
-		const imageAnchor = createElement('a', { href: `details/${movie.id}` });
+		const imageAnchor = createElement('a', { href: `./${movie.id}` });
 
 		const movieImage = createElement(
 			'img',

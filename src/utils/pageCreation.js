@@ -105,9 +105,22 @@ export const createNav = () => {
     hamburgerDiv.appendChild(bar);
   }
 
+  const menuUl = createElement('ul', { 'class': 'menu-ul' });
+  const menuLink = createElement('a', { 'class': 'menu-link', 'href': './search' });
+  const menuItem = createElement('li', { 'class': 'menu-list' }, 'Search Page');
+  menuLink.appendChild(menuItem);
+
+  hamburgerDiv.addEventListener('click', () => {
+    hamburgerDiv.classList.toggle('active');
+
+    menuUl.appendChild(menuLink);
+    menuUl.classList.toggle('active');
+    hamburgerDiv.append(menuUl);
+  })
+
   // Create nav search
   const rightNavDiv = createElement('div', { 'class': 'right-nav' });
-  const searchLink = createElement('a', { 'class': 'search-link', 'href': '/search' }, 'Browse Movies');
+  const searchLink = createElement('a', { 'class': 'search-link', 'href': './search' }, 'Browse Movies');
 
   const form = createElement('form', { 'action': '/search', 'class': 'nav-form', 'role': 'search' });
   const input = createElement('input', { 'class': 'nav-search', 'type': 'search', 'placeholder': 'search movies...', 'autocomplete': 'off' });
@@ -129,7 +142,12 @@ export const createNav = () => {
 
     if (query.length === 0) return;
 
-    const searchApiUrl = `${config.devApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
+    let searchApiUrl;
+    if (process.env.NODE_ENV === 'development') {
+      searchApiUrl = `${config.devApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
+    } else {
+      searchApiUrl = `${config.prodApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
+    }
     const data = await fetch_function(searchApiUrl);
 
     // Filter suggestions
@@ -276,7 +294,12 @@ export const fetchAndRenderMovies = async (data, page) => {
   document.body.insertBefore(topControlBtn, movieListing);
 };
 
-const baseApiUrl = `${config.devApiUrl}/v1/movies`;
+let baseApiUrl;
+if (process.env.NODE_ENV === 'development') {
+  baseApiUrl = `${config.devApiUrl}/v1/movies`;
+} else {
+  baseApiUrl = `${config.prodApiUrl}/v1/movies`;
+}
 const callRenderMovies = async (currentPage) => {
   try {
     const myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;
