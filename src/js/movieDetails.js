@@ -27,7 +27,7 @@ async function createDetailsSection(movie) {
 	const genresElement = createElement('p', { class: 'genre' }, splitGenre);
 	const likesElement = createElement('p', {}, `Likes: ${movie.likes}`);
 	const ratingsTitle = createElement('h2', {}, 'TMDB Ratings');
-  const parsedRating = parseFloat(movie.ratings);
+	const parsedRating = parseFloat(movie.ratings);
 	const rottenTomatoes = createElement('p', {}, parsedRating.toFixed(1));
 	movieDetails.append(titleElement, yearElement, genresElement, likesElement, ratingsTitle, rottenTomatoes);
 
@@ -48,9 +48,14 @@ async function createSimilarMovies(movie) {
 	const similarMoviesBox = createElement('div', { class: 'similar-movies-box' });
 	const imagesContainer = createElement('div');
 
-	const MY_API_URL = `${config.devApiUrl}/v1/movies/${movie.id}/similar-movies?page=1&limit=10`;
+	let myApiUrl;
+	if (process.env.NODE_ENV === 'development') {
+		myApiUrl = `${config.devApiUrl}/v1/movies/${movie.id}/similar-movies?page=1&limit=10`;
+	} else {
+		myApiUrl = `${config.prodApiUrl}/v1/movies/${movie.id}/similar-movies?page=1&limit=10`;
+	}
 
-	const data = await fetch_function(MY_API_URL);
+	const data = await fetch_function(myApiUrl);
 	let movies = [];
 	movies.push(...data.response);
 
@@ -228,7 +233,12 @@ async function createCommentsSection(movie, comments, commentPagination, INITIAL
 		const NEW_LIMIT = CURRENT_LIMIT + 10; // Increase limit by 10
 		loadComments.setAttribute('data-limit', NEW_LIMIT);
 
-		const commentApiUrl = `${config.devApiUrl}/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
+		let commentApiUrl;
+		if (process.env.NODE_ENV === 'development') {
+			commentApiUrl = `${config.devApiUrl}/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
+		} else {
+			commentApiUrl = `${config.prodApiUrl}/v1/movies/${movie.id}/comments?page=1&limit=${NEW_LIMIT}`;
+		}
 
 		try {
 			const commentResults = await axios.get(commentApiUrl);
@@ -281,9 +291,16 @@ async function createCommentsSection(movie, comments, commentPagination, INITIAL
 			author: randomNames[getRandomNumber()],
 		};
 
+		let createCommentApiUrl;
+		if (process.env.NODE_ENV === 'development') {
+			createCommentApiUrl = `${config.devApiUrl}/v1/movies/${movie.id}/comments`;
+		} else {
+			createCommentApiUrl = `${config.prodApiUrl}/v1/movies/${movie.id}/comments`;
+		}
+
 		try {
 			await axios.post(
-				`${config.devApiUrl}/v1/movies/${movie.id}/comments`,
+				createCommentApiUrl,
 				JSON.stringify(commentData),
 				{ headers: { 'Content-Type': 'application/json' } }
 			);
@@ -336,8 +353,15 @@ async function initializeDetailsPage() {
 	const movieId = urlParams.pathname.split("/")[2];
 	const INITIAL_LIMIT = 10;
 
-	const movieApiUrl = `${config.devApiUrl}/v1/movies/${movieId}`;
-	const commentApiUrl = `${config.devApiUrl}/v1/movies/${movieId}/comments?page=1&limit=${INITIAL_LIMIT}`;
+	let movieApiUrl;
+	let commentApiUrl;
+	if (process.env.NODE_ENV === 'development') {
+		movieApiUrl = `${config.devApiUrl}/v1/movies/${movieId}`;
+		commentApiUrl = `${config.devApiUrl}/v1/movies/${movieId}/comments?page=1&limit=${INITIAL_LIMIT}`;
+	} else {
+		movieApiUrl = `${config.prodApiUrl}/v1/movies/${movieId}`;
+		commentApiUrl = `${config.prodApiUrl}/v1/movies/${movieId}/comments?page=1&limit=${INITIAL_LIMIT}`;
+	}
 
 	let movie = {};
 	let comment = [];

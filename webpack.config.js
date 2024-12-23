@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Dotenv = require('dotenv-webpack');
 
 // const isProduction = process.env.NODE_ENV === 'production';
 
@@ -60,6 +61,13 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css',
+    }),
+    new Dotenv({
+      path: './.env', // load default environment variables
+      safe: true, // load all environment variables, even if they're not used
+      allowEmptyValues: true, // allow empty values in environment variables
+      systemvars: true, // load system environment variables
+      silent: true, // suppress warnings and errors
     }),
   ],
   // optimization: {

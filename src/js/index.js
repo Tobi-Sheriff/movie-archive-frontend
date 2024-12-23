@@ -6,7 +6,12 @@ async function initializeIndexPage() {
 	createNav();
 
 	const INITIAL_PAGE = 1;
-	const baseApiUrl = `${config.devApiUrl}/v1/movies`;
+	let baseApiUrl;
+	if (process.env.NODE_ENV === 'development') {
+		baseApiUrl = `${config.devApiUrl}/v1/movies`;
+	} else {
+		baseApiUrl = `${config.prodApiUrl}/v1/movies`;
+	}
 
 	const callRenderMovies = async (currentPage) => {
 		try {
