@@ -106,7 +106,7 @@ export const createNav = () => {
   }
 
   const menuUl = createElement('ul', { 'class': 'menu-ul' });
-  const menuLink = createElement('a', { 'class': 'menu-link', 'href': './search' });
+  const menuLink = createElement('a', { 'class': 'menu-link', 'href': '/search' });
   const menuItem = createElement('li', { 'class': 'menu-list' }, 'Search Page');
   menuLink.appendChild(menuItem);
 
@@ -120,9 +120,10 @@ export const createNav = () => {
 
   // Create nav search
   const rightNavDiv = createElement('div', { 'class': 'right-nav' });
-  const searchLink = createElement('a', { 'class': 'search-link', 'href': './search' }, 'Browse Movies');
+  // const linkPath = window.location.pathname;
+  const searchLink = createElement('a', { 'class': 'search-link', 'href': `/search` }, 'Browse Movies');
 
-  const form = createElement('form', { 'action': './search', 'class': 'nav-form', 'role': 'search' });
+  const form = createElement('form', { 'action': `/search`, 'class': 'nav-form', 'role': 'search' });
   const input = createElement('input', { 'class': 'nav-search', 'type': 'search', 'placeholder': 'search movies...', 'autocomplete': 'off' });
   const ul = createElement('ul', { 'class': 'suggestions' });
 
