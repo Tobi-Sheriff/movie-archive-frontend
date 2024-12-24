@@ -122,7 +122,7 @@ export const createNav = () => {
   const rightNavDiv = createElement('div', { 'class': 'right-nav' });
   const searchLink = createElement('a', { 'class': 'search-link', 'href': './search' }, 'Browse Movies');
 
-  const form = createElement('form', { 'action': '/search', 'class': 'nav-form', 'role': 'search' });
+  const form = createElement('form', { 'action': './search', 'class': 'nav-form', 'role': 'search' });
   const input = createElement('input', { 'class': 'nav-search', 'type': 'search', 'placeholder': 'search movies...', 'autocomplete': 'off' });
   const ul = createElement('ul', { 'class': 'suggestions' });
 
@@ -338,7 +338,6 @@ forwardSkip.addEventListener('click', async () => {
 export const fetch_function = async (my_api_url) => {
   try {
     const results = await axios.get(my_api_url);
-    console.log(results);
 
     return results.data;
   } catch (error) {

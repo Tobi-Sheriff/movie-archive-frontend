@@ -11,7 +11,7 @@ async function initializeSearchPage() {
   createNav();
 
   const searchContainer = document.querySelector('.big-search');
-  const bigSearchForm = createElement('form', { 'action': '/search' });
+  const bigSearchForm = createElement('form', { 'action': './search' });
   const bigSearchInput = createElement('input', { 'class': 'search-input', 'type': 'text', 'placeholder': 'Search..', 'name': 'search', 'autocomplete': 'off' });
   const bigSearchBtn = createElement('button', { 'type': 'submit' }, 'Search');
 
