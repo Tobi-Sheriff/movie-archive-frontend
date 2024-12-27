@@ -5,7 +5,6 @@ import {
   fetch_function
 } from '../utils/pageCreation.js';
 import { config } from '../config/config.js';
-import '../css/style.css';
 
 async function initializeSearchPage() {
   createNav();
@@ -23,26 +22,21 @@ async function initializeSearchPage() {
   })
 
   const INITIAL_PAGE = 1;
-  let baseApiUrl;
-  if (process.env.NODE_ENV === 'development') {
-    baseApiUrl = `${config.devApiUrl}/v1/movies`;
-  } else {
-    baseApiUrl = `${config.prodApiUrl}/v1/movies`;
-  }
+  const baseApiUrl = `${config.apiUrl}/v1/movies`;
 
-  let myApiUrl;
   const callRenderMovies = async (currentPage) => {
+    let myApiUrl, fetchedData;
     try {
       if (localStorage.getItem('searchQuery')) {
         const searchValue = localStorage.getItem('searchQuery');
-        const myApiUrl = `${baseApiUrl}/search?q=${searchValue}&page=${currentPage}&limit=8`;
-        const data = await fetch_function(myApiUrl);
+        myApiUrl = `${baseApiUrl}/search?q=${searchValue}&page=${currentPage}&limit=8`;
+        fetchedData = await fetch_function(myApiUrl);
 
-        await fetchAndRenderMovies(data, currentPage);
+        await fetchAndRenderMovies(fetchedData, currentPage);
       } else {
         myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;
-        const data = await fetch_function(myApiUrl);
-        await fetchAndRenderMovies(data, currentPage);
+        fetchedData = await fetch_function(myApiUrl);
+        await fetchAndRenderMovies(fetchedData, currentPage);
       }
     } catch (error) {
       console.error('Failed to fetch movies:', error.message);
