@@ -5,18 +5,18 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(__dirname, 'public/pages/index.html'));
 });
 
 app.get('/details/:id', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/details.html'));
+    res.sendFile(path.join(__dirname, 'public/pages/details.html'));
 });
 
 app.get('/search', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/search.html'));
+    res.sendFile(path.join(__dirname, 'public/pages/search.html'));
 });
 
 app.listen(3000, () => {

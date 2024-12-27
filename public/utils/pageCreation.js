@@ -89,12 +89,11 @@ export const createElement = (tag, attributes = {}, text = '') => {
   return element;
 }
 
-import logo from '../images/TMA-logo.png';
 export const createNav = () => {
   const nav = document.querySelector('.nav-container');
   const logoDiv = createElement('div', { 'class': 'logo' });
   const logoLink = createElement('a', { 'class': 'nav-link', 'href': '/' });
-  const logoImg = createElement('img', { 'src': logo, 'alt': 'logo' });
+  const logoImg = createElement('img', { 'src': 'images/TMA-logo.png', 'alt': 'logo' });
 
   logoLink.appendChild(logoImg);
   logoDiv.appendChild(logoLink);
@@ -106,7 +105,7 @@ export const createNav = () => {
   }
 
   const menuUl = createElement('ul', { 'class': 'menu-ul' });
-  const menuLink = createElement('a', { 'class': 'menu-link', 'href': './search' });
+  const menuLink = createElement('a', { 'class': 'menu-link', 'href': '/search' });
   const menuItem = createElement('li', { 'class': 'menu-list' }, 'Search Page');
   menuLink.appendChild(menuItem);
 
@@ -120,9 +119,10 @@ export const createNav = () => {
 
   // Create nav search
   const rightNavDiv = createElement('div', { 'class': 'right-nav' });
-  const searchLink = createElement('a', { 'class': 'search-link', 'href': './search' }, 'Browse Movies');
+  // const linkPath = window.location.pathname;
+  const searchLink = createElement('a', { 'class': 'search-link', 'href': `/search` }, 'Browse Movies');
 
-  const form = createElement('form', { 'action': './search', 'class': 'nav-form', 'role': 'search' });
+  const form = createElement('form', { 'action': `/search`, 'class': 'nav-form', 'role': 'search' });
   const input = createElement('input', { 'class': 'nav-search', 'type': 'search', 'placeholder': 'search movies...', 'autocomplete': 'off' });
   const ul = createElement('ul', { 'class': 'suggestions' });
 
@@ -142,12 +142,7 @@ export const createNav = () => {
 
     if (query.length === 0) return;
 
-    let searchApiUrl;
-    if (process.env.NODE_ENV === 'development') {
-      searchApiUrl = `${config.devApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
-    } else {
-      searchApiUrl = `${config.prodApiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
-    }
+    const searchApiUrl = `${config.apiUrl}/v1/movies/search?q=${query}&page=1&limit=10`;
     const data = await fetch_function(searchApiUrl);
 
     // Filter suggestions
@@ -294,12 +289,7 @@ export const fetchAndRenderMovies = async (data, page) => {
   document.body.insertBefore(topControlBtn, movieListing);
 };
 
-let baseApiUrl;
-if (process.env.NODE_ENV === 'development') {
-  baseApiUrl = `${config.devApiUrl}/v1/movies`;
-} else {
-  baseApiUrl = `${config.prodApiUrl}/v1/movies`;
-}
+const baseApiUrl = `${config.apiUrl}/v1/movies`;
 const callRenderMovies = async (currentPage) => {
   try {
     const myApiUrl = `${baseApiUrl}?page=${currentPage}&limit=12`;

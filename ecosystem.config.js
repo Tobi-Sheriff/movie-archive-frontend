@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
-    name: 'movie-archive-frontend',
-    script: './src/app.js',
+    name: 'TMA-Frontend',
+    script: './app.js',
     env: {
       NODE_ENV: 'production'
     }
