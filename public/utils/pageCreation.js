@@ -127,7 +127,7 @@ export const createNav = () => {
   const ul = createElement('ul', { 'class': 'suggestions' });
 
   form.appendChild(input);
-  rightNavDiv.append(searchLink, form, ul);
+  rightNavDiv.append(form, ul, searchLink);
 
   form.addEventListener('submit', async () => {
     localStorage.setItem('searchQuery', input.value);

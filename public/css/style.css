@@ -49,10 +49,11 @@ header .nav-container .logo img {
 header .nav-container .right-nav {
   display: flex;
   padding: 15px 0;
+  align-items: center;
 }
 
 header .nav-container .search-link {
-  margin: 11px 10px 0 0;
+  margin: 0 0 0 10px;
   color: grey;
   font-size: 15px;
 }
@@ -74,7 +75,7 @@ header .nav-container .right-nav .nav-search::placeholder {
 
 ul.suggestions {
   list-style: none;
-  margin: 43px 0 0 0;
+  margin: 200px 0 0 0;
   padding: 0;
   position: absolute;
   width: 250px;
