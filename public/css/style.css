@@ -34,6 +34,7 @@ header .nav-container {
   display: flex;
   justify-content: space-between;
   margin: 0 50px;
+  height: 100%;
 }
 
 header .nav-container .logo {
