@@ -1,5 +1,4 @@
 import {
-  createNav,
   createElement,
   fetchAndRenderMovies,
   fetch_function
@@ -7,28 +6,28 @@ import {
 import { config } from '../config/config.js';
 
 async function initializeSearchPage() {
-  createNav();
-
   const searchContainer = document.querySelector('.big-search');
   const bigSearchForm = createElement('form', { 'action': './search' });
-  const bigSearchInput = createElement('input', { 'class': 'search-input', 'type': 'text', 'placeholder': 'Search..', 'name': 'search', 'autocomplete': 'off' });
+  const bigSearchInput = createElement('input', { 'class': 'search-input', 'type': 'text', 'name': 'q', 'placeholder': 'Search..', 'autocomplete': 'off' });
   const bigSearchBtn = createElement('button', { 'type': 'submit' }, 'Search');
 
   bigSearchForm.append(bigSearchInput, bigSearchBtn);
   searchContainer.append(bigSearchForm);
 
-  bigSearchForm.addEventListener('submit', () => {
-    localStorage.setItem('searchQuery', bigSearchInput.value);
-  })
-
   const INITIAL_PAGE = 1;
   const baseApiUrl = `${config.apiUrl}/v1/movies`;
 
+  bigSearchForm.addEventListener('submit', async () => {
+    callRenderMovies(INITIAL_PAGE);
+  })
+
   const callRenderMovies = async (currentPage) => {
     let myApiUrl, fetchedData;
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchValue = urlParams.get('q');
+
     try {
-      if (localStorage.getItem('searchQuery')) {
-        const searchValue = localStorage.getItem('searchQuery');
+      if (searchValue) {
         myApiUrl = `${baseApiUrl}/search?q=${searchValue}&page=${currentPage}&limit=8`;
         fetchedData = await fetch_function(myApiUrl);
 

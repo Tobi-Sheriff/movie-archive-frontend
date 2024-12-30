@@ -90,19 +90,7 @@ export const createElement = (tag, attributes = {}, text = '') => {
 }
 
 export const createNav = () => {
-  const nav = document.querySelector('.nav-container');
-  const logoDiv = createElement('div', { 'class': 'logo' });
-  const logoLink = createElement('a', { 'class': 'nav-link', 'href': '/' });
-  const logoImg = createElement('img', { 'src': 'images/TMA-logo.png', 'alt': 'logo' });
-
-  logoLink.appendChild(logoImg);
-  logoDiv.appendChild(logoLink);
-
-  const hamburgerDiv = createElement('div', { 'class': 'hamburger' });
-  for (let i = 0; i < 3; i++) {
-    const bar = createElement('div', { 'class': 'bar' });
-    hamburgerDiv.appendChild(bar);
-  }
+  const hamburgerDiv = document.querySelector('.hamburger');
 
   const menuUl = createElement('ul', { 'class': 'menu-ul' });
   const menuLink = createElement('a', { 'class': 'menu-link', 'href': '/search' });
@@ -117,21 +105,18 @@ export const createNav = () => {
     hamburgerDiv.append(menuUl);
   })
 
-  // Create nav search
-  const rightNavDiv = createElement('div', { 'class': 'right-nav' });
-  // const linkPath = window.location.pathname;
-  const searchLink = createElement('a', { 'class': 'search-link', 'href': `/search` }, 'Browse Movies');
+  // const form = document.querySelector('form');
+  const input = document.querySelector('.nav-search');
+  const ul = document.querySelector('.suggestions');
 
-  const form = createElement('form', { 'action': `/search`, 'class': 'nav-form', 'role': 'search' });
-  const input = createElement('input', { 'class': 'nav-search', 'type': 'search', 'placeholder': 'search movies...', 'autocomplete': 'off' });
-  const ul = createElement('ul', { 'class': 'suggestions' });
-
-  form.appendChild(input);
-  rightNavDiv.append(form, ul, searchLink);
-
-  form.addEventListener('submit', async () => {
-    localStorage.setItem('searchQuery', input.value);
-  });
+  // form.addEventListener('submit', async () => {
+  //   console.log('check');
+  //   const formData = new FormData(form);
+  //   const urlParams = new URLSearchParams(formData);
+  //   const queryString = urlParams.toString();
+  //   window.location.search = queryString;
+  //   console.log(location.search);
+  // });
 
   input.addEventListener("input", async (event) => {
     const query = event.target.value.trim().toLowerCase();
@@ -175,8 +160,6 @@ export const createNav = () => {
       ul.style.display = "none";
     }
   });
-
-  nav.append(logoDiv, hamburgerDiv, rightNavDiv);
 }
 
 export const createMovie = (row, movie) => {
