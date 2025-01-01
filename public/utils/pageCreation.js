@@ -105,18 +105,8 @@ export const createNav = () => {
     hamburgerDiv.append(menuUl);
   })
 
-  // const form = document.querySelector('form');
   const input = document.querySelector('.nav-search');
   const ul = document.querySelector('.suggestions');
-
-  // form.addEventListener('submit', async () => {
-  //   console.log('check');
-  //   const formData = new FormData(form);
-  //   const urlParams = new URLSearchParams(formData);
-  //   const queryString = urlParams.toString();
-  //   window.location.search = queryString;
-  //   console.log(location.search);
-  // });
 
   input.addEventListener("input", async (event) => {
     const query = event.target.value.trim().toLowerCase();
